@@ -181,24 +181,91 @@ class PDCATools:
             text = text.replace(wrong, correct)
         return text
     
-    def apply_all_fixes(self, text: str) -> str:
+    def apply_all_fixes(self, text: str, show_progress: bool = False) -> str:
         """
         Apply all Thai text fixes (Developer tool)
         
         Usage:
             fixed = tools.apply_all_fixes(ocr_text)
+            fixed = tools.apply_all_fixes(ocr_text, show_progress=True)
         """
+        original = text
+        fixes_applied = []
+        
+        if show_progress:
+            print("Applying Thai text fixes...")
+        
+        # Step 1: Numerals
         text = self.thai_numerals_fix(text)
+        if text != original:
+            fixes_applied.append("numerals")
+            original = text
+            if show_progress:
+                print("  ✓ Numerals converted")
+        
+        # Step 2: Vowels
         text = self.thai_vowels_fix(text)
+        if text != original:
+            fixes_applied.append("vowels")
+            original = text
+            if show_progress:
+                print("  ✓ Vowels corrected")
+        
+        # Step 3: Tone marks
         text = self.thai_tone_marks_fix(text)
+        if text != original:
+            fixes_applied.append("tone marks")
+            original = text
+            if show_progress:
+                print("  ✓ Tone marks fixed")
+        
+        # Step 4: Legal terms
         text = self.legal_terms_fix(text)
+        if text != original:
+            fixes_applied.append("legal terms")
+            if show_progress:
+                print("  ✓ Legal terms corrected")
         
         # Basic cleanup
         text = re.sub(r'  +', ' ', text)
         
+        if show_progress:
+            print(f"Total fixes applied: {len(fixes_applied)} ({', '.join(fixes_applied)})")
+        
         return text
     
     # ========== QA TOOLS ==========
+    
+    def batch_test(self, folder: str, pattern: str = "*.txt") -> List[Dict]:
+        """
+        Test multiple OCR output files (QA tool)
+        
+        Usage:
+            results = tools.batch_test("output_txt")
+        """
+        from glob import glob
+        
+        files = glob(str(Path(folder) / pattern))
+        results = []
+        
+        print(f"Testing {len(files)} files in {folder}...")
+        
+        for i, file in enumerate(files, 1):
+            result = self.test_document(file)
+            result['index'] = i
+            results.append(result)
+            
+            # Show progress
+            q = result.get('quality', 'N/A')
+            print(f"  [{i}/{len(files)}] {Path(file).name}: {q}")
+        
+        # Summary
+        avg_quality = sum(float(r.get('quality', '0%').replace('%', '')) 
+                         for r in results if 'quality' in r) / len(results) if results else 0
+        
+        print(f"\nAverage quality: {avg_quality:.1f}%")
+        
+        return results
     
     def calculate_quality(self, text: str) -> float:
         """
@@ -275,7 +342,95 @@ class PDCATools:
             "improvement": f"{(q2-q1)*100:+.1f}%"
         }
     
-    # ========== REPORTING TOOLS ==========
+    # ========== BATCH PROCESSING ==========
+    
+    def batch_process_files(self, input_folder: str, output_folder: str = "output_txt",
+                           apply_fixes: bool = True, show_progress: bool = True) -> Dict:
+        """
+        Batch process multiple PDF files (Developer tool)
+        
+        Usage:
+            results = tools.batch_process_files("input_pdf")
+        """
+        from glob import glob
+        
+        # Find all PDFs
+        pdfs = glob(str(Path(input_folder) / "*.pdf"))
+        
+        if not pdfs:
+            return {"error": "No PDF files found"}
+        
+        # Create output folder
+        Path(output_folder).mkdir(exist_ok=True)
+        
+        results = {
+            "total": len(pdfs),
+            "processed": 0,
+            "failed": 0,
+            "files": []
+        }
+        
+        print(f"Processing {len(pdfs)} PDF files...")
+        
+        for i, pdf in enumerate(pdfs, 1):
+            pdf_name = Path(pdf).stem
+            
+            if show_progress:
+                print(f"\n[{i}/{len(pdfs)}] {pdf_name}.pdf")
+            
+            try:
+                # Run OCR
+                from ocr_skill import process_file
+                result = process_file(pdf, show_progress=False)
+                
+                # Save output
+                output_file = Path(output_folder) / f"{pdf_name}.txt"
+                with open(output_file, 'w', encoding='utf-8') as f:
+                    f.write(result.get_all_text())
+                
+                # Apply fixes if requested
+                if apply_fixes:
+                    with open(output_file, 'r', encoding='utf-8') as f:
+                        text = f.read()
+                    fixed = self.apply_all_fixes(text, show_progress=False)
+                    
+                    if fixed != text:
+                        with open(output_file, 'w', encoding='utf-8') as f:
+                            f.write(fixed)
+                        if show_progress:
+                            print(f"  ✓ Fixes applied")
+                
+                # Calculate quality
+                with open(output_file, 'r', encoding='utf-8') as f:
+                    quality = self.calculate_quality(f.read())
+                
+                results["processed"] += 1
+                results["files"].append({
+                    "name": pdf_name,
+                    "output": str(output_file),
+                    "quality": f"{quality:.0%}",
+                    "pages": result.total_pages
+                })
+                
+                if show_progress:
+                    print(f"  ✓ Complete (Quality: {quality:.0%})")
+                
+            except Exception as e:
+                results["failed"] += 1
+                results["files"].append({
+                    "name": pdf_name,
+                    "error": str(e)
+                })
+                if show_progress:
+                    print(f"  ✗ Failed: {e}")
+        
+        # Summary
+        print(f"\n{'='*60}")
+        print(f"Batch Processing Complete")
+        print(f"{'='*60}")
+        print(f"Total: {results['total']} | Success: {results['processed']} | Failed: {results['failed']}")
+        
+        return results
     
     def status(self):
         """Show current status"""
@@ -354,7 +509,9 @@ def main():
         print("  plan                - Plan new week (interactive)")
         print("  review              - Review completed week")
         print("  test <file>         - Test OCR output file")
+        print("  batch-test <folder> - Test multiple files")
         print("  compare <f1> <f2>   - Compare two files")
+        print("  batch-process       - Process all PDFs in folder")
         return
     
     cmd = sys.argv[1]
@@ -393,6 +550,16 @@ def main():
             return
         result = tools.compare_outputs(sys.argv[2], sys.argv[3])
         print(json.dumps(result, indent=2, ensure_ascii=False))
+    
+    elif cmd == "batch-test":
+        if len(sys.argv) < 3:
+            print("Usage: python dev_tools.py batch-test <folder>")
+            return
+        results = tools.batch_test(sys.argv[2])
+    
+    elif cmd == "batch-process":
+        folder = sys.argv[2] if len(sys.argv) > 2 else "input_pdf"
+        tools.batch_process_files(folder)
     
     else:
         print(f"Unknown command: {cmd}")
