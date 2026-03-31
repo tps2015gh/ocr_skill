@@ -6,6 +6,29 @@ This guide helps a **small development team** continuously improve the OCR Skill
 
 **Think of it as:** A small company with 3 developers, each with specific roles, working together to make the product better over time.
 
+**Tools:** Use `dev_tools.py` for all PDCA tasks (minimizes token usage!)
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# Tech Lead: Check status
+python dev_tools.py status
+
+# Tech Lead: Plan new week
+python dev_tools.py plan
+
+# Developer: Apply Thai fixes
+python -c "from dev_tools import PDCATools; t=PDCATools(); print(t.apply_all_fixes(text))"
+
+# QA: Test output
+python dev_tools.py test output_txt/document.txt
+
+# Generate report
+python dev_tools.py report
+```
+
 ---
 
 ## 👥 Team Roles
@@ -21,9 +44,24 @@ This guide helps a **small development team** continuously improve the OCR Skill
 - Review pull requests
 - Decide when to release
 
+**Tools (use dev_tools.py):**
+```bash
+# Check status
+python dev_tools.py status
+
+# Plan new week
+python dev_tools.py plan
+
+# Review completed week
+python dev_tools.py review
+
+# Generate report
+python dev_tools.py report
+```
+
 **Files to check:**
 - `README.md` - Product documentation
-- `pdca_log.json` - Progress tracking
+- `pdca_log.json` - Progress tracking (auto-managed by dev_tools.py)
 - GitHub Issues - User feedback
 
 ---
@@ -38,6 +76,21 @@ This guide helps a **small development team** continuously improve the OCR Skill
 - Write tests
 - Update code
 - Document changes
+
+**Tools (use dev_tools.py):**
+```python
+from dev_tools import PDCATools
+tools = PDCATools()
+
+# Apply Thai fixes
+fixed = tools.thai_numerals_fix(text)
+fixed = tools.thai_vowels_fix(text)
+fixed = tools.thai_tone_marks_fix(text)
+fixed = tools.legal_terms_fix(text)
+
+# Or apply all at once
+fixed = tools.apply_all_fixes(text)
+```
 
 **Files to work on:**
 - `ocr_skill/` - Main package
@@ -56,6 +109,18 @@ This guide helps a **small development team** continuously improve the OCR Skill
 - Check documentation
 - Test on real documents
 - Report issues
+
+**Tools (use dev_tools.py):**
+```bash
+# Test OCR output
+python dev_tools.py test output_txt/document.txt
+
+# Compare before/after
+python dev_tools.py test output_txt/before.txt output_txt/after.txt
+
+# Calculate quality
+python -c "from dev_tools import PDCATools; t=PDCATools(); print(t.calculate_quality(text))"
+```
 
 **Files to check:**
 - `output_txt/` - OCR results
