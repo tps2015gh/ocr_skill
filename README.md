@@ -1,5 +1,9 @@
 # OCR Skill
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Thai & English](https://img.shields.io/badge/lang-Thai%20%26%20English-green.svg)](https://github.com/tps2015gh/ocr_skill)
+
 A powerful OCR (Optical Character Recognition) processor supporting **Thai and English** languages. 
 This project processes **PDF and Image files** (JPG, PNG, BMP, TIFF, GIF) and converts them to text 
 and markdown formats with page-by-page separation.
@@ -491,7 +495,9 @@ Keep the original meaning and format intact.
 
 ## 📝 License
 
-This project is provided as-is for educational and practical use.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+**In short:** You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of this software.
 
 ---
 
