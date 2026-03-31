@@ -1,663 +1,430 @@
-# PDCA Loop Guide for Complex Thai OCR Improvement
+# Dev Team PDCA Guide - Continuous Product Improvement
 
 ## 🎯 Purpose
 
-This guide enables AI agents to continuously improve **Complex Thai OCR** text quality through a **Plan-Do-Check-Act (PDCA)** cycle. Each AI agent can pick up where the previous one left off.
+This guide helps a **small development team** continuously improve the OCR Skill product through **Plan-Do-Check-Act** cycles.
 
-**Target:** Complex Thai documents with:
-- Mixed Thai-English text
-- Tables and forms
-- Legal/government terminology
-- Thai numerals and special characters
-- Complex vowel and tone mark combinations
+**Think of it as:** A small company with 3 developers, each with specific roles, working together to make the product better over time.
 
 ---
 
-## 🚀 Quick Start (Executable)
+## 👥 Team Roles
 
-### Run Full PDCA Cycle
+### 1. Tech Lead (Manager)
+
+**Who:** Senior developer / Team lead
+
+**Responsibilities:**
+- Review project status
+- Prioritize issues
+- Assign tasks
+- Review pull requests
+- Decide when to release
+
+**Files to check:**
+- `README.md` - Product documentation
+- `pdca_log.json` - Progress tracking
+- GitHub Issues - User feedback
+
+---
+
+### 2. Developer (Programmer)
+
+**Who:** Core developer
+
+**Responsibilities:**
+- Fix bugs
+- Implement improvements
+- Write tests
+- Update code
+- Document changes
+
+**Files to work on:**
+- `ocr_skill/` - Main package
+- `src/` - Core processor
+- `examples/` - Usage examples
+
+---
+
+### 3. QA Engineer (Tester)
+
+**Who:** Quality assurance developer
+
+**Responsibilities:**
+- Test new features
+- Verify bug fixes
+- Check documentation
+- Test on real documents
+- Report issues
+
+**Files to check:**
+- `output_txt/` - OCR results
+- `output_md/` - Markdown results
+- Test documents in `input_pdf/`
+
+---
+
+## 🔄 PDCA Cycle (Weekly Sprint)
+
+### Week 1 Example
+
+#### Monday - PLAN (Tech Lead)
+
+**Task:** Review and plan improvements
 
 ```bash
-# Start new task (auto-runs all agents)
-python run_pdca.py --input input_pdf/document.pdf --target-quality 0.95
+# 1. Check current status
+git log --oneline -10
+git status
 
-# Resume existing task
-python run_pdca.py --resume
+# 2. Review last week's progress
+cat pdca_log.json
+
+# 3. Identify areas to improve
+# Example findings:
+# - Thai numeral conversion needed
+# - Legal terms not handled well
+# - Documentation outdated
 ```
 
-### Run Specific Agent
-
-```bash
-# Manager agent only
-python run_pdca.py --agent manager --resume
-
-# Programmer agent only
-python run_pdca.py --agent programmer --resume
-
-# QA agent only
-python run_pdca.py --agent qa --resume
-```
-
----
-
-## 📋 Agent Roles & Tasks
-
-### 1. **Manager Agent** (Team Lead) 🎯
-
-**Mission:** Coordinate the PDCA improvement cycle for complex Thai OCR
-
----
-
-#### **Tasks:**
-
-**Task 1.1: Initialize Task**
-```bash
-# Create state file
-{
-  "task_id": "thai_complex_001",
-  "input_file": "input_pdf/legal_doc.pdf",
-  "document_type": "thai_legal",
-  "current_phase": "plan",
-  "iteration": 1,
-  "target_quality": 0.95,
-  "current_quality": 0.0,
-  "complexity_flags": {
-    "has_tables": false,
-    "has_english": false,
-    "has_thai_numerals": false,
-    "has_legal_terms": false
-  },
-  "open_bugs": [],
-  "fixes_applied": [],
-  "logs": []
-}
-```
-
-**Task 1.2: Review Current State**
-```bash
-# Read pdca_state.json
-cat pdca_state.json
-
-# Check:
-- current_phase (plan/do/check/act/complete)
-- iteration count
-- open_bugs count
-- current_quality vs target_quality
-```
-
-**Task 1.3: Coordinate Agents**
-```
-IF phase == "plan":
-    → Assign bug identification to Programmer
-    → Set priority for complex Thai issues
-    
-ELSE IF phase == "do":
-    → Monitor Programmer progress
-    → Track fixes applied
-    
-ELSE IF phase == "check":
-    → Assign QA review
-    → Compare quality vs target
-    
-ELSE IF phase == "act":
-    → Decide: continue or finalize
-    → Document successful patterns
-```
-
-**Task 1.4: Update State**
-```python
-# After each phase, update state
-state["current_phase"] = next_phase
-state["logs"].append({
-    "timestamp": datetime.now().isoformat(),
-    "agent": "Manager",
-    "action": action,
-    "phase": current_phase,
-    "iteration": iteration
-})
-save_state(state)
-```
-
-**Task 1.5: Decision Making**
-```python
-# Stop conditions
-IF current_quality >= target_quality AND len(open_bugs) == 0:
-    → Mark complete
-    → Generate report
-    
-ELSE IF iteration >= max_iterations (10):
-    → Mark stopped
-    → Document remaining issues
-    
-ELSE:
-    → Continue to next iteration
-```
-
----
-
-### 2. **Programmer Agent** (Thai OCR Specialist) 💻
-
-**Mission:** Apply targeted fixes for complex Thai text issues
-
----
-
-#### **Tasks:**
-
-**Task 2.1: Read Bug List**
-```bash
-# Load state
-with open('pdca_state.json', 'r', encoding='utf-8') as f:
-    state = json.load(f)
-
-# Get open bugs
-bugs = state['open_bugs']
-
-# Sort by priority (critical > high > medium > low)
-priority_order = {'critical': 4, 'high': 3, 'medium': 2, 'low': 1}
-bugs.sort(key=lambda x: priority_order.get(x['severity'], 1), reverse=True)
-```
-
-**Task 2.2: Analyze Thai OCR Output**
-```bash
-# Read OCR output
-with open(state['output_files']['ocr'], 'r', encoding='utf-8') as f:
-    text = f.read()
-
-# Analyze for complex Thai issues
-analysis = {
-    'thai_vowel_issues': len(re.findall(r'[ะัาิีุูเแโใไ]', text)),
-    'tone_mark_issues': len(re.findall(r'[่้๊๋]', text)),
-    'thai_numerals': len(re.findall(r'[๑๒๓๔๕๖๗๘๙๐]', text)),
-    'spacing_issues': len(re.findall(r'  +', text)),
-    'mixed_lang_issues': len(re.findall(r'[a-zA-Z]+[\u0E00-\u0E7F]+|[a-zA-Z]+', text)),
-    'legal_terms': check_legal_terms(text)
-}
-```
-
-**Task 2.3: Apply Thai-Specific Fixes**
-
-**Fix 2.3.1: Thai Vowel Corrections**
-```python
-def fix_thai_vowels(text):
-    """Fix common Thai vowel OCR errors"""
-    fixes = [
-        # Short/long vowel pairs
-        (r'กระ(?!ร)', 'กระ'),  # Common prefix
-        (r'จะ(?!ก)', 'จะ'),    # Common word
-        (r'อะไร', 'อะไร'),      # What
-        
-        # Confused vowels
-        (r'([ก-ฮ])ั้', r'\1้ำ'),  # Double vowel fix
-        (r'([ก-ฮ])ี้', r'\1ี้'),  # Long i + tone
-        
-        # Common misrecognitions
-        (r'เé', 'เé'),  # e + accent
-        (r'แé', 'แé'),  # ae + accent
-    ]
-    
-    for pattern, replacement in fixes:
-        text = re.sub(pattern, replacement, text)
-    
-    return text
-```
-
-**Fix 2.3.2: Tone Mark Corrections**
-```python
-def fix_tone_marks(text):
-    """Fix Thai tone mark stacking errors"""
-    fixes = [
-        # Remove double tone marks
-        (r'([ก-ฮ])่้', r'\1้'),
-        (r'([ก-ฮ])้่', r'\1้'),
-        (r'([ก-ฮ])้๊', r'\1้'),
-        (r'([ก-ฮ])้๋', r'\1้'),
-        
-        # Correct tone order
-        (r'([ก-ฮ])([่้๊๋])([่้๊๋])', r'\1\2'),
-    ]
-    
-    for pattern, replacement in fixes:
-        text = re.sub(pattern, replacement, text)
-    
-    return text
-```
-
-**Fix 2.3.3: Thai Numeral Conversion**
-```python
-def fix_thai_numerals(text, convert_to_arabic=True):
-    """Convert Thai numerals to Arabic (or vice versa)"""
-    if convert_to_arabic:
-        thai_to_arabic = {
-            '๑': '1', '๒': '2', '๓': '3', '๔': '4', '๕': '5',
-            '๖': '6', '๗': '7', '๘': '8', '๙': '9', '๐': '0'
-        }
-        for thai, arabic in thai_to_arabic.items():
-            text = text.replace(thai, arabic)
-    return text
-```
-
-**Fix 2.3.4: Legal/Government Terms**
-```python
-def fix_legal_terms(text):
-    """Fix common Thai legal/government term OCR errors"""
-    legal_terms = {
-        # Government
-        'กรม ที่ ดิน': 'กรมที่ดิน',
-        'กระทรวง มหาดไทย': 'กระทรวงมหาดไทย',
-        'ราช การ': 'ราชการ',
-        
-        # Legal
-        'สัญญา จ้าง': 'สัญญาจ้าง',
-        'ข้อ ตกลง': 'ข้อตกลง',
-        'คู่ สัญญา': 'คู่สัญญา',
-        
-        # Formal
-        'ด้วย เหตุนี้': 'ด้วยเหตุนี้',
-        'จึง ใคร่': 'จึงใคร่',
-        'ยัง มิ': 'ยังมิ',
-    }
-    
-    for wrong, correct in legal_terms.items():
-        text = text.replace(wrong, correct)
-    
-    return text
-```
-
-**Fix 2.3.5: Mixed Thai-English**
-```python
-def fix_mixed_language(text):
-    """Fix spacing issues in mixed Thai-English text"""
-    # Add space between Thai and English
-    text = re.sub(r'([\u0E00-\u0E7F])([a-zA-Z])', r'\1 \2', text)
-    text = re.sub(r'([a-zA-Z])([\u0E00-\u0E7F])', r'\1 \2', text)
-    
-    # Remove space within English words
-    text = re.sub(r'([a-zA-Z]) ([a-zA-Z])', r'\1\2', text)
-    
-    return text
-```
-
-**Task 2.4: Save Fixed Output**
-```python
-# Save reviewed/fixed version
-with open('pdca_reviewed.txt', 'w', encoding='utf-8') as f:
-    f.write(fixed_text)
-
-# Log fixes applied
-state['fixes_applied'].append({
-    'iteration': state['iteration'],
-    'fixes': fix_list,
-    'timestamp': datetime.now().isoformat()
-})
-
-# Update state
-state['current_phase'] = 'check'
-save_state(state)
-```
-
----
-
-### 3. **QA Agent** (Quality Assurance) ✅
-
-**Mission:** Review and validate Thai OCR quality
-
----
-
-#### **Tasks:**
-
-**Task 3.1: Load Reviewed Text**
-```bash
-# Read reviewed output
-with open('pdca_reviewed.txt', 'r', encoding='utf-8') as f:
-    text = f.read()
-```
-
-**Task 3.2: Calculate Quality Score**
-```python
-def calculate_thai_quality(text):
-    """Calculate quality score for Thai OCR text"""
-    score = 1.0
-    
-    # Deductions
-    
-    # 1. OCR errors (critical)
-    ocr_errors = len(re.findall(r'\[OCR Error', text))
-    score -= min(ocr_errors * 0.1, 0.3)
-    
-    # 2. Unknown sequences
-    unknown = len(re.findall(r'\?\?\?', text))
-    score -= min(unknown * 0.03, 0.15)
-    
-    # 3. Spacing issues
-    spacing = len(re.findall(r'  +', text))
-    score -= min(spacing * 0.01, 0.1)
-    
-    # 4. Thai vowel consistency
-    # Check for common vowel confusion patterns
-    vowel_issues = len(re.findall(r'[ะัา][ิีุู]', text))
-    score -= min(vowel_issues * 0.02, 0.1)
-    
-    # 5. Tone mark stacking (error)
-    tone_stack = len(re.findall(r'[่้๊๋]{2,}', text))
-    score -= min(tone_stack * 0.05, 0.15)
-    
-    # Bonuses
-    
-    # 1. Thai script consistency
-    thai_chars = len(re.findall(r'[\u0E00-\u0E7F]', text))
-    thai_ratio = thai_chars / max(len(text), 1)
-    if thai_ratio > 0.3:
-        score += 0.05
-    
-    # 2. Legal term accuracy
-    legal_terms_present = check_legal_terms_accuracy(text)
-    if legal_terms_present > 0.9:
-        score += 0.05
-    
-    # 3. Numeral consistency
-    numeral_check = check_numeral_consistency(text)
-    if numeral_check:
-        score += 0.03
-    
-    return max(0.0, min(1.0, score))
-```
-
-**Task 3.3: Thai-Specific Quality Checks**
-```python
-def check_thai_quality_detailed(text):
-    """Detailed Thai OCR quality checks"""
-    checks = {
-        'vowel_accuracy': True,
-        'tone_accuracy': True,
-        'numeral_format': True,
-        'spacing_correct': True,
-        'legal_terms_correct': True,
-        'mixed_lang_correct': True,
-    }
-    
-    # Check vowel stacking (error)
-    if re.search(r'[ะัาิีุู]{2,}', text):
-        checks['vowel_accuracy'] = False
-    
-    # Check tone mark stacking (error)
-    if re.search(r'[่้๊๋]{2,}', text):
-        checks['tone_accuracy'] = False
-    
-    # Check numeral consistency
-    thai_nums = len(re.findall(r'[๑๒๓๔๕๖๗๘๙๐]', text))
-    arabic_nums = len(re.findall(r'[1234567890]', text))
-    if thai_nums > 0 and arabic_nums > 0:
-        checks['numeral_format'] = False  # Mixed formats
-    
-    # Check spacing
-    if re.search(r'  +', text):
-        checks['spacing_correct'] = False
-    
-    # Check legal terms
-    legal_errors = [
-        'กรม ที่ ดิน',  # Should be กรมที่ดิน
-        'กระทรวง มหาดไทย',  # Should be กระทรวงมหาดไทย
-    ]
-    for error in legal_errors:
-        if error in text:
-            checks['legal_terms_correct'] = False
-    
-    return checks
-```
-
-**Task 3.4: Identify Remaining Issues**
-```python
-def identify_remaining_issues(text, state):
-    """Identify issues that still need fixing"""
-    issues = []
-    
-    # Check for uncorrected Thai vowels
-    if re.search(r'[ะัา][ิีุู]', text):
-        issues.append({
-            'type': 'thai_vowel',
-            'description': 'Vowel stacking detected',
-            'severity': 'medium',
-            'location': 'throughout'
-        })
-    
-    # Check for tone mark errors
-    if re.search(r'[่้๊๋]{2,}', text):
-        issues.append({
-            'type': 'tone_mark',
-            'description': 'Tone mark stacking detected',
-            'severity': 'high',
-            'location': 'throughout'
-        })
-    
-    # Check for Thai numerals (if should be Arabic)
-    thai_nums = re.findall(r'[๑๒๓๔๕๖๗๘๙๐]', text)
-    if len(thai_nums) > 5:
-        issues.append({
-            'type': 'number',
-            'description': f'Found {len(thai_nums)} Thai numerals',
-            'severity': 'low',
-            'location': 'throughout'
-        })
-    
-    # Check for legal term errors
-    legal_errors = check_legal_terms(text)
-    if legal_errors:
-        issues.append({
-            'type': 'legal_term',
-            'description': f'Legal term errors: {legal_errors}',
-            'severity': 'high',
-            'location': 'specific'
-        })
-    
-    return issues
-```
-
-**Task 3.5: Update State with Quality**
-```python
-# Calculate quality
-quality = calculate_thai_quality(text)
-state['current_quality'] = quality
-
-# Add new bugs if found
-new_issues = identify_remaining_issues(text, state)
-for issue in new_issues:
-    issue['id'] = f"BUG-{len(state['open_bugs']) + 1:03d}"
-    issue['found_iteration'] = state['iteration']
-    issue['status'] = 'open'
-    state['open_bugs'].append(issue)
-
-# Decision
-if quality >= state['target_quality'] and len(state['open_bugs']) == 0:
-    state['current_phase'] = 'act'  # Finalize
-else:
-    state['current_phase'] = 'plan'  # Continue
-
-save_state(state)
-```
-
----
-
-## 🔄 Complete PDCA Flow for Complex Thai
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    COMPLEX THAI OCR PDCA                     │
-│                                                              │
-│  ┌────────────┐                                             │
-│  │ MANAGER    │                                             │
-│  │ PLAN Phase │                                             │
-│  │ - Create task                                           │
-│  │ - Set target (0.95)                                     │
-│  │ - Identify complexity                                   │
-│  └─────┬──────┘                                             │
-│        │                                                     │
-│        ▼                                                     │
-│  ┌────────────┐                                             │
-│  │ PROGRAMMER │                                             │
-│  │ DO Phase   │                                             │
-│  │ - Fix Thai vowels                                       │
-│  │ - Fix tone marks                                        │
-│  │ - Convert numerals                                      │
-│  │ - Fix legal terms                                       │
-│  └─────┬──────┘                                             │
-│        │                                                     │
-│        ▼                                                     │
-│  ┌────────────┐                                             │
-│  │ QA         │                                             │
-│  │ CHECK Phase│                                             │
-│  │ - Calculate quality                                     │
-│  │ - Check Thai specifics                                  │
-│  │ - Identify remaining                                    │
-│  └─────┬──────┘                                             │
-│        │                                                     │
-│        ▼                                                     │
-│  ┌────────────┐                                             │
-│  │ MANAGER    │                                             │
-│  │ ACT Phase  │                                             │
-│  │ - Quality >= 0.95?                                      │
-│  │ - Bugs = 0?                                             │
-│  │ - Continue or Stop                                      │
-│  └─────┬──────┘                                             │
-│        │                                                     │
-│        └──────────────┐                                     │
-│                       │                                     │
-│        IF continue ←──┘                                     │
-│        IF stop → Finalize                                   │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📊 Complex Thai Issue Priority
-
-| Issue Type | Severity | Priority | Fix By |
-|------------|----------|----------|--------|
-| Tone mark stacking | Critical | 10 | Programmer |
-| Legal term errors | High | 8 | Programmer |
-| Thai vowel confusion | High | 7 | Programmer |
-| Mixed language spacing | Medium | 5 | Programmer |
-| Thai numerals | Low | 3 | Programmer |
-| Minor spacing | Low | 2 | Programmer |
-
----
-
-## 📁 State File for Complex Thai
-
+**Update pdca_log.json:**
 ```json
 {
-  "task_id": "thai_complex_001",
-  "input_file": "input_pdf/legal_contract.pdf",
-  "document_type": "thai_legal",
-  "current_phase": "do",
-  "iteration": 2,
-  "target_quality": 0.95,
-  "current_quality": 0.87,
-  "complexity_flags": {
-    "has_tables": true,
-    "has_english": true,
-    "has_thai_numerals": true,
-    "has_legal_terms": true
-  },
-  "open_bugs": [
+  "week": 1,
+  "start_date": "2026-03-31",
+  "focus": "Thai text improvements",
+  "tasks": [
     {
-      "id": "BUG-005",
-      "type": "legal_term",
-      "description": "กรม ที่ ดิน should be กรมที่ดิน",
-      "severity": "high",
-      "found_iteration": 2,
-      "status": "open"
+      "id": 1,
+      "task": "Add Thai numeral conversion",
+      "assigned_to": "Developer",
+      "status": "todo"
+    },
+    {
+      "id": 2,
+      "task": "Fix legal term handling",
+      "assigned_to": "Developer",
+      "status": "todo"
+    },
+    {
+      "id": 3,
+      "task": "Test on 5 Thai documents",
+      "assigned_to": "QA",
+      "status": "todo"
     }
   ],
-  "fixes_applied": [
-    {
-      "iteration": 1,
-      "fixes": [
-        "Converted 15 Thai numerals to Arabic",
-        "Fixed 8 tone mark stacking errors",
-        "Corrected 3 legal terms"
-      ],
-      "timestamp": "2026-03-31T15:30:00"
-    }
-  ],
-  "logs": [
-    {
-      "timestamp": "2026-03-31T15:00:00",
-      "agent": "Manager",
-      "action": "Started PDCA cycle",
-      "phase": "plan",
-      "iteration": 1
-    }
-  ],
-  "output_files": {
-    "ocr": "output_txt/legal_contract.txt",
-    "reviewed": "pdca_reviewed.txt"
+  "goals": [
+    "Improve Thai OCR accuracy by 5%",
+    "Add numeral conversion feature",
+    "Update documentation"
+  ]
+}
+```
+
+---
+
+#### Tuesday-Thursday - DO (Developer)
+
+**Task:** Implement improvements
+
+**Developer workflow:**
+```bash
+# 1. Create feature branch
+git checkout -b feature/thai-numerals
+
+# 2. Implement fix in ocr_skill/__init__.py
+def fix_thai_numerals(text):
+    thai_nums = {'๑':'1','๒':'2','๓':'3','๔':'4','๕':'5',
+                 '๖':'6','๗':'7','๘':'8','๙':'9','๐':'0'}
+    for thai, arabic in thai_nums.items():
+        text = text.replace(thai, arabic)
+    return text
+
+# 3. Test locally
+python examples/01_basic_usage.py
+
+# 4. Commit changes
+git add ocr_skill/__init__.py
+git commit -m "Add Thai numeral conversion"
+
+# 5. Push for review
+git push origin feature/thai-numerals
+```
+
+---
+
+#### Friday - CHECK (QA)
+
+**Task:** Test and verify
+
+**QA workflow:**
+```bash
+# 1. Pull latest changes
+git pull origin feature/thai-numerals
+
+# 2. Test on real documents
+python src/ocr_processor.py
+
+# 3. Check output quality
+cat output_txt/document.txt
+
+# 4. Verify numeral conversion worked
+# Before: ๑๒๓๔๕
+# After:  12345 ✓
+
+# 5. Report results
+# Update pdca_log.json with test results
+```
+
+**Update pdca_log.json:**
+```json
+{
+  "week": 1,
+  "end_date": "2026-04-04",
+  "results": {
+    "tasks_completed": 3,
+    "tests_passed": true,
+    "quality_improvement": "+5.2%",
+    "issues_found": 1
   }
 }
 ```
 
 ---
 
-## 🚀 Quick Start for Complex Thai
+#### Friday Afternoon - ACT (Tech Lead)
 
-### Manager Agent Starts:
+**Task:** Review and decide next steps
+
 ```bash
-# 1. Create state for complex Thai
+# 1. Review QA results
+cat pdca_log.json
+
+# 2. If quality good → Merge to main
+git checkout main
+git merge feature/thai-numerals
+git push origin main
+
+# 3. Plan next week
+# Based on results, decide:
+# - Continue improvements?
+# - Fix remaining issues?
+# - Release new version?
+```
+
+**Decision:**
+- ✅ Quality improved from 87% → 92%
+- ✅ Numeral conversion working
+- ⚠️ 1 issue: Legal terms still need work
+
+**Next week focus:** Legal term improvements
+
+---
+
+## 📊 Progress Tracking (pdca_log.json)
+
+```json
 {
-  "task_id": "thai_complex_001",
-  "input_file": "input_pdf/legal_doc.pdf",
-  "document_type": "thai_legal",
-  "current_phase": "plan",
-  "iteration": 1,
-  "target_quality": 0.95,
-  "current_quality": 0.0,
-  "open_bugs": [],
-  "fixes_applied": [],
-  "logs": []
-} > pdca_state.json
-
-# 2. Run initial OCR
-python src/ocr_processor.py
-
-# 3. Begin PDCA cycle
-```
-
-### Programmer Agent Continues:
-```bash
-# 1. Read state
-cat pdca_state.json
-
-# 2. Apply Thai-specific fixes
-python -c "
-from ocr_skill import process_file
-result = process_file('input_pdf/legal_doc.pdf')
-text = result.get_all_text()
-
-# Apply complex Thai fixes
-text = fix_thai_vowels(text)
-text = fix_tone_marks(text)
-text = fix_legal_terms(text)
-
-with open('pdca_reviewed.txt', 'w', encoding='utf-8') as f:
-    f.write(text)
-"
-
-# 3. Update state
-```
-
-### QA Agent Reviews:
-```bash
-# 1. Calculate Thai quality
-python -c "
-quality = calculate_thai_quality(open('pdca_reviewed.txt').read())
-print(f'Quality: {quality:.2%}')
-"
-
-# 2. Update state with quality score
-# 3. Identify remaining issues
+  "project": "OCR Skill",
+  "team_size": 3,
+  "start_date": "2026-03-31",
+  
+  "week_1": {
+    "focus": "Thai text improvements",
+    "tasks_completed": 3,
+    "quality_before": "87%",
+    "quality_after": "92%",
+    "improvement": "+5%"
+  },
+  
+  "week_2": {
+    "focus": "Legal terms",
+    "tasks_completed": 2,
+    "quality_before": "92%",
+    "quality_after": "94%",
+    "improvement": "+2%"
+  },
+  
+  "week_3": {
+    "focus": "Documentation",
+    "tasks_completed": 4,
+    "quality_before": "94%",
+    "quality_after": "95%",
+    "improvement": "+1%"
+  },
+  
+  "overall": {
+    "total_weeks": 3,
+    "total_tasks": 9,
+    "quality_start": "87%",
+    "quality_current": "95%",
+    "total_improvement": "+8%"
+  }
+}
 ```
 
 ---
 
-**Version:** 2.0.0 (Complex Thai Focus)  
-**Last Updated:** March 31, 2026  
-**Next Agent:** Read `pdca_state.json` and continue from `current_phase`
+## 📋 Team Meeting Template
+
+### Weekly Meeting Agenda (30 mins)
+
+**1. Review Last Week (10 mins)**
+- What did we complete?
+- What issues were found?
+- Quality metrics?
+
+**2. Plan This Week (10 mins)**
+- What's the focus?
+- Who does what?
+- Expected outcomes?
+
+**3. Blockers (5 mins)**
+- Any issues?
+- Need help?
+
+**4. Action Items (5 mins)**
+- Assign tasks
+- Set deadlines
+
+---
+
+## 🎯 Long-term Goals
+
+### Month 1: Foundation
+- [x] Basic OCR working
+- [ ] Thai numeral conversion ✓ (Week 1)
+- [ ] Legal term handling (Week 2)
+- [ ] Documentation update (Week 3)
+
+### Month 2: Quality
+- [ ] 95% accuracy on Thai documents
+- [ ] Handle complex layouts
+- [ ] Add table detection
+
+### Month 3: Features
+- [ ] Handwriting support (PaddleOCR)
+- [ ] Cloud API integration
+- [ ] Batch processing improvements
+
+### Month 4: Release
+- [ ] Version 1.0.0
+- [ ] PyPI publication
+- [ ] User documentation
+
+---
+
+## 💡 Tips for Small Team
+
+### Work Smart
+
+1. **Small iterations** - Improve a little each week
+2. **Test on real docs** - Use actual Thai documents
+3. **Track progress** - Update pdca_log.json weekly
+4. **Celebrate wins** - Note every improvement
+
+### Communication
+
+```
+# Use simple status updates
+Monday: "Starting work on Thai numerals"
+Wednesday: "Numeral conversion implemented, testing"
+Friday: "✓ Complete - Quality +5%"
+```
+
+### Quality Over Speed
+
+```
+Better to fix 1 bug properly than 5 bugs quickly.
+Better to improve 1% each week than 10% once.
+```
+
+---
+
+## 📁 Files to Maintain
+
+| File | Purpose | Updated By |
+|------|---------|------------|
+| `pdca_log.json` | Progress tracking | Tech Lead |
+| `README.md` | Documentation | Developer |
+| `CHANGELOG.md` | Version history | Tech Lead |
+| `test_results/` | QA reports | QA Engineer |
+
+---
+
+## 🚀 Quick Start for New Team
+
+### Day 1: Setup
+
+```bash
+# Clone repo
+git clone https://github.com/tps2015gh/ocr_skill.git
+cd ocr_skill
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Test OCR
+python src/ocr_processor.py
+```
+
+### Day 2: First Task
+
+```bash
+# Tech Lead assigns task
+# Example: "Fix Thai vowel confusion"
+
+# Developer implements
+git checkout -b feature/vowel-fix
+# ... implement fix ...
+git commit -m "Fix Thai vowels"
+
+# QA tests
+python src/ocr_processor.py
+# ... verify quality ...
+```
+
+### Day 3-5: Continue
+
+```bash
+# Repeat cycle
+# Small improvements daily
+# Weekly review every Friday
+```
+
+---
+
+## 📊 Example: 4-Week Sprint
+
+### Week 1: Thai Numerals
+- **Before:** 87% quality
+- **Fix:** Numeral conversion
+- **After:** 92% quality
+- **Time:** 3 days
+
+### Week 2: Legal Terms
+- **Before:** 92% quality
+- **Fix:** Legal term dictionary
+- **After:** 94% quality
+- **Time:** 4 days
+
+### Week 3: Tone Marks
+- **Before:** 94% quality
+- **Fix:** Tone mark stacking
+- **After:** 95% quality
+- **Time:** 3 days
+
+### Week 4: Documentation
+- **Before:** Outdated docs
+- **Fix:** Update all examples
+- **After:** Complete docs
+- **Time:** 2 days
+
+**Total Improvement:** 87% → 95% in 4 weeks! 🎉
+
+---
+
+**Version:** 4.0.0 (Small Team Guide)  
+**Last Updated:** March 31, 2026
+
+**Remember:** Small team, steady progress, quality product! 🚀

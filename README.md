@@ -24,7 +24,7 @@ and markdown formats with page-by-page separation.
 - **Configurable**: Easy-to-edit configuration file
 - **🔌 Reusable Skill**: Easy integration into other projects
 - **🤖 AI Agent Ready**: Built-in support for AI agent tool integration
-- **🔄 PDCA Loop**: Agent-guided continuous improvement for complex Thai OCR (see `PDCA_LOOP.md`)
+- **🔄 PDCA Loop**: Small team continuous improvement guide (see `PDCA_LOOP.md`)
 
 ---
 
