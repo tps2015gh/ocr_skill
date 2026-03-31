@@ -1,8 +1,8 @@
 """
-Agent Dashboard Web App - Real-time Agent Monitoring
-=====================================================
+Agent Dashboard Web App - Task-based Real-time Monitoring
+==========================================================
 
-Simple web dashboard to see AI agents working in real-time.
+Web dashboard showing agents moving between task tables.
 
 Usage:
     python ai_tools/web_dashboard.py
@@ -42,11 +42,12 @@ class DashboardData:
                 "Developer": {"status": "idle", "x": 50, "y": 50, "task": "", "last_update": ""},
                 "QA": {"status": "idle", "x": 50, "y": 50, "task": "", "last_update": ""}
             },
-            "nodes": [
-                {"id": "plan", "name": "PLAN", "x": 100, "y": 100, "color": "#3498db"},
-                {"id": "do", "name": "DO", "x": 300, "y": 100, "color": "#e74c3c"},
-                {"id": "check", "name": "CHECK", "x": 300, "y": 300, "color": "#f1c40f"},
-                {"id": "act", "name": "ACT", "x": 100, "y": 300, "color": "#2ecc71"}
+            "tasks": [
+                {"id": "plan_week", "name": "Plan Week", "x": 100, "y": 100, "color": "#3498db", "queue": 0},
+                {"id": "apply_fixes", "name": "Apply Fixes", "x": 300, "y": 100, "color": "#e74c3c", "queue": 0},
+                {"id": "test_quality", "name": "Test Quality", "x": 500, "y": 100, "color": "#f1c40f", "queue": 0},
+                {"id": "review_week", "name": "Review Week", "x": 200, "y": 250, "color": "#2ecc71", "queue": 0},
+                {"id": "batch_process", "name": "Batch Process", "x": 400, "y": 250, "color": "#9b59b6", "queue": 0}
             ],
             "log": [],
             "stats": {
@@ -61,17 +62,23 @@ class DashboardData:
         with open(DASHBOARD_DATA, 'w', encoding='utf-8') as f:
             json.dump(self.data, f, indent=2, ensure_ascii=False)
     
-    def update_agent(self, agent: str, status: str, task: str = "", node: str = ""):
+    def update_agent(self, agent: str, status: str, task: str = "", task_id: str = ""):
         """Update agent status and position"""
         if agent not in self.data["agents"]:
             self.data["agents"][agent] = {"status": "idle", "x": 50, "y": 50, "task": "", "last_update": ""}
         
-        # Find node position
-        if node:
-            for n in self.data["nodes"]:
-                if n["id"] == node:
-                    self.data["agents"][agent]["x"] = n["x"]
-                    self.data["agents"][agent]["y"] = n["y"]
+        # Find task position
+        if task_id:
+            for t in self.data["tasks"]:
+                if t["id"] == task_id:
+                    self.data["agents"][agent]["x"] = t["x"]
+                    self.data["agents"][agent]["y"] = t["y"]
+                    
+                    # Update queue count
+                    if status == "working":
+                        t["queue"] = t.get("queue", 0) + 1
+                    else:
+                        t["queue"] = max(0, t.get("queue", 0) - 1)
                     break
         
         self.data["agents"][agent]["status"] = status
@@ -127,9 +134,9 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             agent = params.get('agent', ['Unknown'])[0]
             status = params.get('status', ['idle'])[0]
             task = params.get('task', [''])[0]
-            node = params.get('node', [''])[0]
+            task_id = params.get('task_id', [''])[0]
             
-            dashboard.update_agent(agent, status, task, node)
+            dashboard.update_agent(agent, status, task, task_id)
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json; charset=utf-8')
@@ -171,7 +178,7 @@ def get_html():
         }
         .dashboard {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 1fr 350px;
             gap: 20px;
         }
         .visualization {
@@ -179,26 +186,32 @@ def get_html():
             border-radius: 15px;
             padding: 20px;
             position: relative;
-            height: 500px;
+            height: 400px;
         }
-        .node {
+        .task-table {
             position: absolute;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            width: 180px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid;
             transition: all 0.3s ease;
         }
-        .node:hover { transform: scale(1.1); }
+        .task-table:hover { transform: scale(1.05); }
+        .task-name {
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+        .task-queue {
+            font-size: 0.75em;
+            color: #888;
+        }
         .agent {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -208,116 +221,131 @@ def get_html():
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             border: 3px solid #fff;
             animation: pulse 2s infinite;
+            z-index: 10;
         }
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
-        .agent-status {
+        .agent-label {
             position: absolute;
-            bottom: -25px;
-            font-size: 0.7em;
-            white-space: nowrap;
-            background: rgba(0,0,0,0.7);
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-        .agent-task {
-            position: absolute;
-            top: -25px;
+            bottom: -20px;
             font-size: 0.6em;
             white-space: nowrap;
             background: rgba(0,0,0,0.7);
-            padding: 2px 8px;
-            border-radius: 10px;
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            padding: 2px 6px;
+            border-radius: 8px;
         }
         .side-panel {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
         .panel {
             background: rgba(255,255,255,0.05);
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
         }
         .panel h2 {
-            margin-bottom: 15px;
-            font-size: 1.3em;
+            margin-bottom: 12px;
+            font-size: 1.2em;
             border-bottom: 2px solid rgba(255,255,255,0.1);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
         .agent-card {
             background: rgba(255,255,255,0.05);
             border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
         .agent-icon {
-            font-size: 2em;
-            width: 50px;
+            font-size: 1.8em;
+            width: 45px;
             text-align: center;
         }
         .agent-info { flex: 1; }
-        .agent-name { font-weight: bold; margin-bottom: 5px; }
+        .agent-name { font-weight: bold; margin-bottom: 3px; font-size: 0.95em; }
         .agent-status-text {
-            font-size: 0.85em;
+            font-size: 0.8em;
             color: #888;
         }
         .status-idle { color: #888; }
         .status-working { color: #2ecc71; }
         .status-busy { color: #f39c12; }
         .log-entry {
-            padding: 8px 0;
+            padding: 6px 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.85em;
+            font-size: 0.8em;
         }
-        .log-time { color: #888; margin-right: 10px; }
-        .log-agent { font-weight: bold; margin-right: 10px; }
+        .log-time { color: #888; margin-right: 8px; font-size: 0.9em; }
+        .log-agent { font-weight: bold; margin-right: 8px; }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
         }
         .stat-card {
             background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 8px;
+            padding: 12px;
             text-align: center;
         }
         .stat-value {
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: bold;
             color: #3498db;
         }
         .stat-label {
-            font-size: 0.8em;
+            font-size: 0.7em;
             color: #888;
-            margin-top: 5px;
+            margin-top: 4px;
         }
         .controls {
-            margin-top: 20px;
-            padding: 15px;
+            padding: 12px;
             background: rgba(255,255,255,0.05);
             border-radius: 10px;
+        }
+        .controls h3 {
+            font-size: 1em;
+            margin-bottom: 10px;
         }
         .controls button {
             background: #3498db;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
-            margin: 5px;
-            font-size: 0.9em;
+            margin: 4px;
+            font-size: 0.8em;
+            width: 100%;
         }
         .controls button:hover { background: #2980b9; }
+        .task-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .task-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .task-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .task-info { flex: 1; }
+        .task-label { font-weight: bold; font-size: 0.9em; }
+        .task-queue-count { font-size: 0.75em; color: #888; }
     </style>
 </head>
 <body>
@@ -327,12 +355,7 @@ def get_html():
         
         <div class="dashboard">
             <div class="visualization" id="vis">
-                <!-- Nodes -->
-                <div class="node" id="node-plan" style="left: 100px; top: 100px; background: #3498db;">PLAN</div>
-                <div class="node" id="node-do" style="left: 300px; top: 100px; background: #e74c3c;">DO</div>
-                <div class="node" id="node-check" style="left: 300px; bottom: 100px; background: #f1c40f;">CHECK</div>
-                <div class="node" id="node-act" style="left: 100px; bottom: 100px; background: #2ecc71;">ACT</div>
-                
+                <!-- Task tables will be added here -->
                 <!-- Agents will be added here -->
             </div>
             
@@ -356,6 +379,13 @@ def get_html():
                 </div>
                 
                 <div class="panel">
+                    <h2>Tasks</h2>
+                    <div class="task-list" id="task-list">
+                        <!-- Task items will be added here -->
+                    </div>
+                </div>
+                
+                <div class="panel">
                     <h2>Agents</h2>
                     <div id="agents-list">
                         <!-- Agent cards will be added here -->
@@ -364,16 +394,18 @@ def get_html():
                 
                 <div class="panel">
                     <h2>Activity Log</h2>
-                    <div id="log-list" style="max-height: 300px; overflow-y: auto;">
+                    <div id="log-list" style="max-height: 200px; overflow-y: auto;">
                         <!-- Log entries will be added here -->
                     </div>
                 </div>
                 
                 <div class="controls">
-                    <h3>Test Controls</h3>
-                    <button onclick="simulateAgent('Tech Lead', 'Planning week', 'plan')">Simulate Tech Lead</button>
-                    <button onclick="simulateAgent('Developer', 'Applying fixes', 'do')">Simulate Developer</button>
-                    <button onclick="simulateAgent('QA', 'Testing quality', 'check')">Simulate QA</button>
+                    <h3>Simulate Agents</h3>
+                    <button onclick="simulateAgent('Tech Lead', 'Planning week', 'plan_week')">Tech Lead: Plan Week</button>
+                    <button onclick="simulateAgent('Developer', 'Applying fixes', 'apply_fixes')">Developer: Apply Fixes</button>
+                    <button onclick="simulateAgent('QA', 'Testing quality', 'test_quality')">QA: Test Quality</button>
+                    <button onclick="simulateAgent('Tech Lead', 'Reviewing results', 'review_week')">Tech Lead: Review</button>
+                    <button onclick="simulateAgent('Developer', 'Batch processing', 'batch_process')">Developer: Batch</button>
                 </div>
             </div>
         </div>
@@ -390,8 +422,24 @@ def get_html():
             fetch('/api/data')
                 .then(r => r.json())
                 .then(data => {
-                    // Update agents visualization
                     const vis = document.getElementById('vis');
+                    
+                    // Update task tables
+                    const existingTables = document.querySelectorAll('.task-table');
+                    existingTables.forEach(e => e.remove());
+                    
+                    data.tasks.forEach(task => {
+                        const table = document.createElement('div');
+                        table.className = 'task-table';
+                        table.style.left = (task.x - 90) + 'px';
+                        table.style.top = (task.y - 40) + 'px';
+                        table.style.borderColor = task.color;
+                        table.innerHTML = `
+                            <div class="task-name">${task.name}</div>
+                            <div class="task-queue">${task.queue || 0} in queue</div>
+                        `;
+                        vis.appendChild(table);
+                    });
                     
                     // Remove old agents
                     document.querySelectorAll('.agent').forEach(e => e.remove());
@@ -400,13 +448,12 @@ def get_html():
                     for (const [name, info] of Object.entries(data.agents)) {
                         const agent = document.createElement('div');
                         agent.className = 'agent';
-                        agent.style.left = (info.x - 30) + 'px';
-                        agent.style.top = (info.y - 30) + 'px';
+                        agent.style.left = (info.x - 25) + 'px';
+                        agent.style.top = (info.y - 25) + 'px';
                         agent.style.background = getStatusColor(info.status);
                         agent.innerHTML = `
                             ${agentIcons[name] || '\\u{1F916}'}
-                            <div class="agent-task">${info.task}</div>
-                            <div class="agent-status">${info.status} &bull; ${info.last_update}</div>
+                            <div class="agent-label">${name}</div>
                         `;
                         vis.appendChild(agent);
                     }
@@ -415,6 +462,21 @@ def get_html():
                     document.getElementById('stat-actions').textContent = data.stats.total_actions;
                     document.getElementById('stat-week').textContent = data.stats.current_week || 0;
                     document.getElementById('stat-quality').textContent = data.stats.quality || '0%';
+                    
+                    // Update task list
+                    const taskList = document.getElementById('task-list');
+                    taskList.innerHTML = '';
+                    data.tasks.forEach(task => {
+                        taskList.innerHTML += `
+                            <div class="task-item">
+                                <div class="task-color" style="background: ${task.color}"></div>
+                                <div class="task-info">
+                                    <div class="task-label">${task.name}</div>
+                                    <div class="task-queue-count">${task.queue || 0} in queue</div>
+                                </div>
+                            </div>
+                        `;
+                    });
                     
                     // Update agents list
                     const agentsList = document.getElementById('agents-list');
@@ -425,7 +487,7 @@ def get_html():
                                 <div class="agent-icon">${agentIcons[name] || '\\u{1F916}'}</div>
                                 <div class="agent-info">
                                     <div class="agent-name">${name}</div>
-                                    <div class="agent-status-text status-${info.status}">${info.status} &bull; ${info.task}</div>
+                                    <div class="agent-status-text status-${info.status}">${info.status} &bull; ${info.task || 'No task'}</div>
                                 </div>
                             </div>
                         `;
@@ -434,7 +496,7 @@ def get_html():
                     // Update log
                     const logList = document.getElementById('log-list');
                     logList.innerHTML = '';
-                    data.log.slice(0, 20).forEach(entry => {
+                    data.log.slice(0, 15).forEach(entry => {
                         logList.innerHTML += `
                             <div class="log-entry">
                                 <span class="log-time">${entry.time}</span>
@@ -452,12 +514,12 @@ def get_html():
             return '#95a5a6';
         }
         
-        function simulateAgent(agent, task, node) {
-            fetch(`/api/update?agent=${encodeURIComponent(agent)}&status=working&task=${encodeURIComponent(task)}&node=${node}`)
+        function simulateAgent(agent, task, taskId) {
+            fetch(`/api/update?agent=${encodeURIComponent(agent)}&status=working&task=${encodeURIComponent(task)}&task_id=${taskId}`)
                 .then(r => r.json())
                 .then(() => {
                     setTimeout(() => {
-                        fetch(`/api/update?agent=${encodeURIComponent(agent)}&status=idle&task=Done!&node=${node}`);
+                        fetch(`/api/update?agent=${encodeURIComponent(agent)}&status=idle&task=Done!&task_id=${taskId}`);
                     }, 2000);
                 });
         }
@@ -474,11 +536,11 @@ def get_html():
 def run_server(port=8000):
     """Run dashboard server"""
     server = HTTPServer(('localhost', port), DashboardHandler)
-    print(f"\n{'='*60}")
+    print(f"\\n{'='*60}")
     print(f"AI Agent Dashboard")
     print(f"{'='*60}")
-    print(f"\nOpening dashboard at: http://localhost:{port}")
-    print(f"\nPress Ctrl+C to stop\n")
+    print(f"\\nOpening dashboard at: http://localhost:{port}")
+    print(f"\\nPress Ctrl+C to stop\\n")
     
     # Open browser
     webbrowser.open(f'http://localhost:{port}')
@@ -486,7 +548,7 @@ def run_server(port=8000):
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\n\nDashboard stopped")
+        print("\\n\\nDashboard stopped")
         server.shutdown()
 
 

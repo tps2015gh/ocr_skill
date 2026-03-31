@@ -33,7 +33,7 @@ class PDCATools:
         self.state = self._load_log()
         self._activities = []  # Store activities locally
     
-    def _log_activity(self, agent: str, action: str, details: str = "", node: str = ""):
+    def _log_activity(self, agent: str, action: str, details: str = "", task_id: str = ""):
         """Log agent activity internally and update web dashboard"""
         activity = {
             "timestamp": datetime.now().isoformat(),
@@ -55,21 +55,13 @@ class PDCATools:
         self._save_log()
         
         # Update web dashboard
-        self._update_web_dashboard(agent, action, details, node)
+        self._update_web_dashboard(agent, action, details, task_id)
     
-    def _update_web_dashboard(self, agent: str, status: str, task: str, node: str):
+    def _update_web_dashboard(self, agent: str, status: str, task: str, task_id: str):
         """Update web dashboard data"""
         try:
             import urllib.request
-            node_map = {
-                "plan": "plan",
-                "do": "do",
-                "check": "check",
-                "act": "act",
-                "review": "act"
-            }
-            node_id = node_map.get(node, "")
-            url = f"http://localhost:8000/api/update?agent={agent}&status={status}&task={task}&node={node_id}"
+            url = f"http://localhost:8000/api/update?agent={agent}&status={status}&task={task}&task_id={task_id}"
             urllib.request.urlopen(url, timeout=1)
         except:
             pass  # Dashboard not running, that's ok
@@ -124,7 +116,7 @@ class PDCATools:
             "Tech Lead",
             "planning",
             f"Week {week_num}: {focus}",
-            node="plan"
+            task_id="plan_week"
         )
         
         print(f"✓ Week {week_num} planned")
@@ -164,8 +156,9 @@ class PDCATools:
         # Log agent activity
         self._log_activity(
             "Tech Lead",
-            "review_week",
-            f"Quality: {quality_before} → {quality_after} ({improvement})"
+            "reviewing",
+            f"Quality: {quality_before} → {quality_after} ({improvement})",
+            task_id="review_week"
         )
         
         print(f"✓ Week {current_week['week']} reviewed")
@@ -299,7 +292,7 @@ class PDCATools:
                 "Developer",
                 "working",
                 f"Applied: {', '.join(fixes_applied)}",
-                node="do"
+                task_id="apply_fixes"
             )
         
         return text
@@ -363,7 +356,7 @@ class PDCATools:
                 "QA",
                 "testing",
                 f"Quality: {score:.0%}",
-                node="check"
+                task_id="test_quality"
             )
         
         return max(0.0, min(1.0, score))
