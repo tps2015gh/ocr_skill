@@ -16,26 +16,38 @@ and markdown formats with page-by-page separation.
 - **Page Separation**: Each page is clearly separated in output files
 - **Memory Efficient**: Optimized for processing large files
 - **Configurable**: Easy-to-edit configuration file
+- **🔌 Reusable Skill**: Easy integration into other projects
+- **🤖 AI Agent Ready**: Built-in support for AI agent tool integration
 
 ---
 
 ## 🏗️ Project Structure
 
 ```
-ai_ocr_GML_OCR/
-├── config/                 # Configuration files
-│   └── config.ini         # OCR settings
-├── input_pdf/             # Input files (PDF, JPG, PNG, BMP, etc.) - gitignored
-├── output_txt/            # TXT output files - gitignored
-├── output_md/             # MD output files - gitignored
-├── scripts/               # Utility scripts
-│   └── run_ocr.bat        # Windows batch script to run OCR
-├── src/                   # Source code
+ai_ocr_gml_ocr/
+├── ai_ocr_gml_ocr/       # Reusable package (import this!)
+│   ├── __init__.py       # Main exports: process_file, OCRProcessor
+│   └── skill.py          # OCRSkill class for AI agents
+├── config/               # Configuration files
+│   └── config.ini        # OCR settings
+├── examples/             # Usage examples
+│   ├── 01_basic_usage.py
+│   ├── 02_custom_config.py
+│   ├── 03_skill_usage.py
+│   ├── 04_agent_integration.py
+│   └── README.md
+├── src/                  # Source code (internal)
 │   ├── __init__.py
-│   └── ocr_processor.py   # Main OCR processing script
-├── .gitignore             # Git ignore rules
-├── README.md              # This file
-└── requirements.txt       # Python dependencies
+│   └── ocr_processor.py  # Core OCR processor
+├── input_pdf/            # Input files (PDF, JPG, PNG, etc.) - gitignored
+├── output_txt/           # TXT output files - gitignored
+├── output_md/            # MD output files - gitignored
+├── scripts/              # Utility scripts
+│   └── run_ocr.bat       # Windows batch script
+├── .gitignore            # Git ignore rules
+├── setup.py              # Package installation
+├── requirements.txt      # Python dependencies
+└── README.md             # This file
 ```
 
 ---
@@ -180,6 +192,121 @@ The following files have been processed:
 | 04-ใบเสนอราคาและเอกสารแนบท้าย.pdf | 392 | ✅ | ✅ |
 | 02-ขอบเขตของงานฯ.pdf | 62 | ✅ | ✅ |
 | ประกาศนียบัตรฯ Cybersecurity.pdf | 1 | ✅ | ✅ |
+
+---
+
+## 🔌 Integration Guide (Use as a Skill)
+
+This OCR processor can be easily integrated into other projects as a reusable skill.
+
+### Installation
+
+```bash
+# Install as editable package
+pip install -e .
+
+# Or just copy the ai_ocr_gml_ocr folder to your project
+```
+
+### Quick Integration
+
+#### Method 1: Simple Function
+```python
+from ai_ocr_gml_ocr import process_file
+
+# Process a file
+result = process_file("document.pdf")
+text = result.get_all_text()
+print(text)
+```
+
+#### Method 2: OCR Skill (Recommended for AI Agents)
+```python
+from ai_ocr_gml_ocr.skill import OCRSkill
+
+# Initialize skill
+ocr = OCRSkill(languages='tha+eng')
+
+# Extract text
+text = ocr.extract_text("document.pdf")
+
+# Or get full result
+result = ocr.scan("image.png")
+print(f"Pages: {result.total_pages}")
+print(f"Output: {result.txt_output}")
+```
+
+#### Method 3: Custom Configuration
+```python
+from ai_ocr_gml_ocr import OCRProcessor
+
+# Create processor with custom settings
+processor = OCRProcessor(
+    languages='eng',      # English only
+    dpi=200,              # Higher quality
+    txt_output_dir='output',
+    show_progress=True
+)
+
+result = processor.process_file_simple("document.pdf")
+```
+
+### AI Agent Tool Integration
+
+```python
+from ai_ocr_gml_ocr.skill import OCRSkill
+
+class MyAgent:
+    def __init__(self):
+        self.ocr = OCRSkill()
+    
+    def read_document(self, file_path):
+        """Tool: Read document with OCR"""
+        return self.ocr.extract_text(file_path)
+    
+    def analyze_document(self, file_path):
+        """Tool: Analyze document structure"""
+        result = self.ocr.scan(file_path, return_dict=True)
+        return {
+            'pages': result['total_pages'],
+            'type': result['file_type'],
+            'text': result['pages'][0]['text'] if result['pages'] else ''
+        }
+```
+
+### Batch Processing
+
+```python
+from ai_ocr_gml_ocr.skill import OCRSkill
+
+ocr = OCRSkill()
+
+# Process multiple files
+files = ["doc1.pdf", "doc2.png", "doc3.jpg"]
+results = ocr.scan_batch(files)
+
+for result in results:
+    print(f"{result.file_path}: {result.total_pages} pages")
+```
+
+### Output Formats
+
+```python
+result = ocr.scan("document.pdf")
+
+# Get all text
+all_text = result.get_all_text()
+
+# Get specific page
+page_1 = result.get_page_text(1)
+
+# Get as dictionary
+data = result.to_dict()
+
+# Save to files
+result.save_txt("output/result.txt")
+result.save_md("output/result.md")
+```
 
 ---
 
