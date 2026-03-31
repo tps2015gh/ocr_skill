@@ -1,0 +1,55 @@
+# Input and Output folders - ignore contents but keep .gitkeep
+input_*/
+!input_*/.gitkeep
+output_*/
+!output_*/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config with secrets
+config/secrets.yaml
+*.env
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+temp/

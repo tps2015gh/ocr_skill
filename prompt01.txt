@@ -1,0 +1,34 @@
+read  https://github.com/zai-org/GLM-OCR?fbclid=IwY2xjawQ4MfNleHRuA2FlbQIxMABicmlkETFpa1lXR3p6OXlnSm8zdnV5c3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHqe7ul6kYvsB1CuuD9_vBoxHRtX7A_dHIxMbgDzbNPBrfSq0DQpHHTt7FSt6_aem_0tU5FTEmltgwIwirmmeHVQ  
+
+then  install this OCR and then read file in 
+folder 
+D:\dev\ai_ocr_GML_OCR\input_pdf 
+
+Use Skill first ,develop skill first to minimize use of AI token .
+
+Team agent as 
+1 Lead Tech 
+2 System Engineer and DevOps 
+3 Programmer 
+4 QA 
+
+Save Token AI in mind .
+
+then scan ocr 3 big file , then output to folder output_txt 
+and output to folder output_md  
+
+each output separate page as ssession  
+
+and also this is thai language and English  
+
+show progress too .
+
+add git and  make input_* and output_* as in gitignore 
+
+git init , add , commit 
+
+create README.MD how to use install instruction all 
+add you as model , your role job , with your opinion
+
+structure folder to easy  to learn and edit as good dev 
+
