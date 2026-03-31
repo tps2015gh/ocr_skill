@@ -1,0 +1,4 @@
+add programmer agent increment update this program to read complex OCR thai text , this loop PDCA loop as team lead agent do .
+  also save step for when loop AI crash then next ai can do , in working add log to file then  dev team can read and easy to fix
+  , loop until reach target and bug file is empty . ​
+────────────────────────────────────────────────────────
