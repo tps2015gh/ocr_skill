@@ -59,7 +59,7 @@ class DashboardData:
     def _save(self):
         """Save dashboard data"""
         with open(DASHBOARD_DATA, 'w', encoding='utf-8') as f:
-            json.dump(self.data, f, indent=2)
+            json.dump(self.data, f, indent=2, ensure_ascii=False)
     
     def update_agent(self, agent: str, status: str, task: str = "", node: str = ""):
         """Update agent status and position"""
@@ -109,15 +109,15 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         """Handle GET requests"""
         if self.path == '/':
             self.send_response(200)
-            self.send_header('Content-type', 'text/html')
+            self.send_header('Content-type', 'text/html; charset=utf-8')
             self.end_headers()
             self.wfile.write(get_html().encode('utf-8'))
         
         elif self.path == '/api/data':
             self.send_response(200)
-            self.send_header('Content-type', 'application/json')
+            self.send_header('Content-type', 'application/json; charset=utf-8')
             self.end_headers()
-            self.wfile.write(json.dumps(dashboard.get_data()).encode('utf-8'))
+            self.wfile.write(json.dumps(dashboard.get_data(), ensure_ascii=False).encode('utf-8'))
         
         elif self.path == '/api/update':
             # Parse query params
@@ -132,9 +132,9 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             dashboard.update_agent(agent, status, task, node)
             
             self.send_response(200)
-            self.send_header('Content-type', 'application/json')
+            self.send_header('Content-type', 'application/json; charset=utf-8')
             self.end_headers()
-            self.wfile.write(json.dumps({"status": "ok"}).encode('utf-8'))
+            self.wfile.write(json.dumps({"status": "ok"}, ensure_ascii=False).encode('utf-8'))
         
         else:
             super().do_GET()
@@ -142,11 +142,12 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 
 def get_html():
     """Generate dashboard HTML"""
-    return '''<!DOCTYPE html>
+    html = """<!DOCTYPE html>
 <html>
 <head>
-    <title>🤖 AI Agent Dashboard</title>
+    <title>AI Agent Dashboard</title>
     <meta http-equiv="refresh" content="2">
+    <meta charset="UTF-8">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -321,7 +322,7 @@ def get_html():
 </head>
 <body>
     <div class="container">
-        <h1>🤖 AI Agent Dashboard</h1>
+        <h1>AI Agent Dashboard</h1>
         <p class="subtitle">Real-time monitoring of AI agents improving OCR Skill</p>
         
         <div class="dashboard">
@@ -337,7 +338,7 @@ def get_html():
             
             <div class="side-panel">
                 <div class="panel">
-                    <h2>📊 Statistics</h2>
+                    <h2>Statistics</h2>
                     <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-value" id="stat-actions">0</div>
@@ -355,21 +356,21 @@ def get_html():
                 </div>
                 
                 <div class="panel">
-                    <h2>👥 Agents</h2>
+                    <h2>Agents</h2>
                     <div id="agents-list">
                         <!-- Agent cards will be added here -->
                     </div>
                 </div>
                 
                 <div class="panel">
-                    <h2>📝 Activity Log</h2>
+                    <h2>Activity Log</h2>
                     <div id="log-list" style="max-height: 300px; overflow-y: auto;">
                         <!-- Log entries will be added here -->
                     </div>
                 </div>
                 
                 <div class="controls">
-                    <h3>🎮 Test Controls</h3>
+                    <h3>Test Controls</h3>
                     <button onclick="simulateAgent('Tech Lead', 'Planning week', 'plan')">Simulate Tech Lead</button>
                     <button onclick="simulateAgent('Developer', 'Applying fixes', 'do')">Simulate Developer</button>
                     <button onclick="simulateAgent('QA', 'Testing quality', 'check')">Simulate QA</button>
@@ -380,9 +381,9 @@ def get_html():
     
     <script>
         const agentIcons = {
-            "Tech Lead": "🎯",
-            "Developer": "💻",
-            "QA": "✅"
+            "Tech Lead": "\\u{1F3AF}",
+            "Developer": "\\u{1F4BB}",
+            "QA": "\\u{2705}"
         };
         
         function updateDashboard() {
@@ -403,9 +404,9 @@ def get_html():
                         agent.style.top = (info.y - 30) + 'px';
                         agent.style.background = getStatusColor(info.status);
                         agent.innerHTML = `
-                            ${agentIcons[name] || '🤖'}
+                            ${agentIcons[name] || '\\u{1F916}'}
                             <div class="agent-task">${info.task}</div>
-                            <div class="agent-status">${info.status} • ${info.last_update}</div>
+                            <div class="agent-status">${info.status} &bull; ${info.last_update}</div>
                         `;
                         vis.appendChild(agent);
                     }
@@ -421,10 +422,10 @@ def get_html():
                     for (const [name, info] of Object.entries(data.agents)) {
                         agentsList.innerHTML += `
                             <div class="agent-card">
-                                <div class="agent-icon">${agentIcons[name] || '🤖'}</div>
+                                <div class="agent-icon">${agentIcons[name] || '\\u{1F916}'}</div>
                                 <div class="agent-info">
                                     <div class="agent-name">${name}</div>
-                                    <div class="agent-status-text status-${info.status}">${info.status} • ${info.task}</div>
+                                    <div class="agent-status-text status-${info.status}">${info.status} &bull; ${info.task}</div>
                                 </div>
                             </div>
                         `;
@@ -466,15 +467,15 @@ def get_html():
         setInterval(updateDashboard, 2000);
     </script>
 </body>
-</html>
-'''
+</html>"""
+    return html
 
 
 def run_server(port=8000):
     """Run dashboard server"""
     server = HTTPServer(('localhost', port), DashboardHandler)
     print(f"\n{'='*60}")
-    print(f"🤖 AI Agent Dashboard")
+    print(f"AI Agent Dashboard")
     print(f"{'='*60}")
     print(f"\nOpening dashboard at: http://localhost:{port}")
     print(f"\nPress Ctrl+C to stop\n")
@@ -485,7 +486,7 @@ def run_server(port=8000):
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\n\n⏹️  Dashboard stopped")
+        print("\n\nDashboard stopped")
         server.shutdown()
 
 
