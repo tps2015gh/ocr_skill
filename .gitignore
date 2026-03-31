@@ -1,8 +1,13 @@
 # Input and Output folders - ignore contents but keep .gitkeep
+# All file types in these folders are ignored
 input_*/
 !input_*/.gitkeep
 output_*/
 !output_*/.gitkeep
+
+# Log files from OCR processing
+ocr_progress.log
+*.log
 
 # Python
 __pycache__/

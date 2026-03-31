@@ -1,17 +1,20 @@
 # AI OCR GML OCR Project
 
-A powerful PDF OCR (Optical Character Recognition) processor supporting **Thai and English** languages. This project processes PDF files and converts them to text and markdown formats with page-by-page separation.
+A powerful OCR (Optical Character Recognition) processor supporting **Thai and English** languages. 
+This project processes **PDF and Image files** (JPG, PNG, BMP, TIFF, GIF) and converts them to text 
+and markdown formats with page-by-page separation.
 
 ---
 
 ## 📋 Features
 
 - **Multi-language Support**: Thai (tha) + English (eng) OCR
-- **Batch Processing**: Process multiple PDF files automatically
+- **Multiple Input Formats**: PDF, JPG, JPEG, PNG, BMP, TIFF, GIF
+- **Batch Processing**: Process multiple files automatically
 - **Progress Tracking**: Real-time progress display during processing
 - **Dual Output**: Generate both TXT and MD (Markdown) formats
 - **Page Separation**: Each page is clearly separated in output files
-- **Memory Efficient**: Optimized for processing large PDF files
+- **Memory Efficient**: Optimized for processing large files
 - **Configurable**: Easy-to-edit configuration file
 
 ---
@@ -22,9 +25,9 @@ A powerful PDF OCR (Optical Character Recognition) processor supporting **Thai a
 ai_ocr_GML_OCR/
 ├── config/                 # Configuration files
 │   └── config.ini         # OCR settings
-├── input_pdf/             # Input PDF files (gitignored)
-├── output_txt/            # TXT output files (gitignored)
-├── output_md/             # MD output files (gitignored)
+├── input_pdf/             # Input files (PDF, JPG, PNG, BMP, etc.) - gitignored
+├── output_txt/            # TXT output files - gitignored
+├── output_md/             # MD output files - gitignored
 ├── scripts/               # Utility scripts
 │   └── run_ocr.bat        # Windows batch script to run OCR
 ├── src/                   # Source code
@@ -117,9 +120,10 @@ show_progress = true
 ## 📤 Input/Output
 
 ### Input
-- Place PDF files in `input_pdf/` folder
-- The processor automatically finds all `.pdf` files
-- Processes the 3 largest files by default (configurable)
+- Place files in `input_pdf/` folder
+- **Supported formats**: PDF, JPG, JPEG, PNG, BMP, TIFF, GIF
+- The processor automatically finds all supported files
+- Processes the 3 largest files by default (configurable in `config.ini`)
 
 ### Output
 - **TXT Format**: `output_txt/` - Plain text with page separators
