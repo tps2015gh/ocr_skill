@@ -53,10 +53,10 @@ class DashboardData:
             },
             "tasks": [
                 {"id": "plan_week", "name": "1. Plan Week", "x": 100, "y": 80, "color": "#3498db", "queue": 0},
-                {"id": "apply_fixes", "name": "2. Apply Fixes", "x": 280, "y": 80, "color": "#e74c3c", "queue": 0},
+                {"id": "write_code", "name": "2. Write Code", "x": 280, "y": 80, "color": "#e74c3c", "queue": 0},
                 {"id": "test_quality", "name": "3. Test Quality", "x": 460, "y": 80, "color": "#f1c40f", "queue": 0},
                 {"id": "review_week", "name": "4. Review Week", "x": 190, "y": 200, "color": "#2ecc71", "queue": 0},
-                {"id": "batch_process", "name": "5. Batch Process", "x": 370, "y": 200, "color": "#9b59b6", "queue": 0}
+                {"id": "fix_bug", "name": "5. Fix Bug", "x": 370, "y": 200, "color": "#9b59b6", "queue": 0}
             ],
             "log": [],
             "stats": {
@@ -376,7 +376,28 @@ def get_html():
                 <div class="workflow-arrow" style="left: 380px; top: 140px;">↘</div>
                 <div class="workflow-arrow" style="left: 260px; top: 140px;">↙</div>
                 
-                <!-- Task tables will be added here -->
+                <!-- Task tables -->
+                <div class="task-table" id="task-plan_week" style="left: 10px; top: 60px; border-color: #3498db;">
+                    <div class="task-name">1. Plan Week</div>
+                    <div class="task-queue">0 in queue</div>
+                </div>
+                <div class="task-table" id="task-write_code" style="left: 190px; top: 60px; border-color: #e74c3c;">
+                    <div class="task-name">2. Write Code</div>
+                    <div class="task-queue">0 in queue</div>
+                </div>
+                <div class="task-table" id="task-test_quality" style="left: 370px; top: 60px; border-color: #f1c40f;">
+                    <div class="task-name">3. Test Quality</div>
+                    <div class="task-queue">0 in queue</div>
+                </div>
+                <div class="task-table" id="task-review_week" style="left: 100px; top: 180px; border-color: #2ecc71;">
+                    <div class="task-name">4. Review Week</div>
+                    <div class="task-queue">0 in queue</div>
+                </div>
+                <div class="task-table" id="task-fix_bug" style="left: 280px; top: 180px; border-color: #9b59b6;">
+                    <div class="task-name">5. Fix Bug</div>
+                    <div class="task-queue">0 in queue</div>
+                </div>
+                
                 <!-- Agents will be added here -->
             </div>
             
@@ -422,11 +443,11 @@ def get_html():
                 
                 <div class="controls">
                     <h3>Simulate Agents</h3>
-                    <button onclick="simulateAgent('Tech Lead', 'Planning week', 'plan_week')">Tech Lead: Plan Week</button>
-                    <button onclick="simulateAgent('Developer', 'Applying fixes', 'apply_fixes')">Developer: Apply Fixes</button>
-                    <button onclick="simulateAgent('QA', 'Testing quality', 'test_quality')">QA: Test Quality</button>
-                    <button onclick="simulateAgent('Tech Lead', 'Reviewing results', 'review_week')">Tech Lead: Review</button>
-                    <button onclick="simulateAgent('Developer', 'Batch processing', 'batch_process')">Developer: Batch</button>
+                    <button onclick="simulateAgent('Tech Lead', 'Planning week', 'plan_week')">🎯 Tech Lead: Plan Week</button>
+                    <button onclick="simulateAgent('Developer', 'Writing code', 'write_code')">💻 Developer: Write Code</button>
+                    <button onclick="simulateAgent('QA', 'Testing quality', 'test_quality')">✅ QA: Test Quality</button>
+                    <button onclick="simulateAgent('Tech Lead', 'Reviewing results', 'review_week')">📊 Tech Lead: Review</button>
+                    <button onclick="simulateAgent('Developer', 'Fixing bug', 'fix_bug')">🐛 Developer: Fix Bug</button>
                 </div>
             </div>
         </div>
@@ -443,23 +464,15 @@ def get_html():
             fetch('/api/data')
                 .then(r => r.json())
                 .then(data => {
-                    const vis = document.getElementById('vis');
-                    
-                    // Update task tables
-                    const existingTables = document.querySelectorAll('.task-table');
-                    existingTables.forEach(e => e.remove());
-                    
+                    // Update task queue counts
                     data.tasks.forEach(task => {
-                        const table = document.createElement('div');
-                        table.className = 'task-table';
-                        table.style.left = (task.x - 90) + 'px';
-                        table.style.top = (task.y - 40) + 'px';
-                        table.style.borderColor = task.color;
-                        table.innerHTML = `
-                            <div class="task-name">${task.name}</div>
-                            <div class="task-queue">${task.queue || 0} in queue</div>
-                        `;
-                        vis.appendChild(table);
+                        const table = document.getElementById('task-' + task.id);
+                        if (table) {
+                            const queueEl = table.querySelector('.task-queue');
+                            if (queueEl) {
+                                queueEl.textContent = (task.queue || 0) + ' in queue';
+                            }
+                        }
                     });
                     
                     // Remove old agents
@@ -476,7 +489,7 @@ def get_html():
                             ${agentIcons[name] || '\\u{1F916}'}
                             <div class="agent-label">${name}</div>
                         `;
-                        vis.appendChild(agent);
+                        document.getElementById('vis').appendChild(agent);
                     }
                     
                     // Update stats
@@ -493,7 +506,7 @@ def get_html():
                                 <div class="task-color" style="background: ${task.color}"></div>
                                 <div class="task-info">
                                     <div class="task-label">${task.name}</div>
-                                    <div class="task-queue-count">${task.queue || 0} in queue</div>
+                                    <div class="task-queue-count">${task.queue || 0} working</div>
                                 </div>
                             </div>
                         `;

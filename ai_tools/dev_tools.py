@@ -292,7 +292,7 @@ class PDCATools:
                 "Developer",
                 "working",
                 f"Applied: {', '.join(fixes_applied)}",
-                task_id="apply_fixes"
+                task_id="write_code"
             )
         
         return text
