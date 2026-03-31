@@ -1,0 +1,51 @@
+{
+  "project": "OCR Skill",
+  "team_size": 3,
+  "start_date": "2026-03-31",
+  "weeks": [
+    {
+      "week": 1,
+      "start_date": "2026-03-31",
+      "focus": "Test",
+      "tasks": [
+        {
+          "task": "task",
+          "status": "todo"
+        }
+      ],
+      "goals": [
+        "goal"
+      ],
+      "status": "in_progress"
+    },
+    {
+      "week": 2,
+      "start_date": "2026-03-31",
+      "focus": "Week 1",
+      "tasks": [
+        {
+          "task": "Add feature",
+          "status": "todo"
+        }
+      ],
+      "goals": [
+        "Improve quality"
+      ],
+      "status": "in_progress"
+    }
+  ],
+  "agent_activities": [
+    {
+      "timestamp": "2026-03-31T16:07:46.816195",
+      "agent": "Tech Lead",
+      "action": "planning",
+      "details": "Week 1: Test"
+    },
+    {
+      "timestamp": "2026-03-31T16:08:11.682834",
+      "agent": "Tech Lead",
+      "action": "planning",
+      "details": "Week 2: Week 1"
+    }
+  ]
+}

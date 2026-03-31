@@ -164,6 +164,9 @@ def get_html():
     <title>AI Agent Dashboard</title>
     <meta http-equiv="refresh" content="2">
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -461,16 +464,19 @@ def get_html():
         };
         
         function updateDashboard() {
-            fetch('/api/data')
+            console.log('Updating dashboard...');
+            fetch('/api/data?t=' + new Date().getTime())
                 .then(r => r.json())
                 .then(data => {
+                    console.log('Data received:', data);
+                    
                     // Update task queue counts
                     data.tasks.forEach(task => {
                         const table = document.getElementById('task-' + task.id);
                         if (table) {
                             const queueEl = table.querySelector('.task-queue');
                             if (queueEl) {
-                                queueEl.textContent = (task.queue || 0) + ' in queue';
+                                queueEl.textContent = (task.queue || 0) + ' working';
                             }
                         }
                     });
