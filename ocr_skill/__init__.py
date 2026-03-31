@@ -1,11 +1,11 @@
 """
-AI OCR GML OCR - A reusable OCR skill for Thai and English documents
+OCR Skill - A reusable OCR skill for Thai and English documents
 
 This package provides a simple, reusable OCR processor that can be easily
 integrated into other projects or used as a standalone skill.
 
 Usage:
-    from ai_ocr_gml_ocr import OCRProcessor, process_file, process_directory
+    from ocr_skill import OCRProcessor, process_file, process_directory
     
     # Simple function usage
     result = process_file("document.pdf")
@@ -15,7 +15,7 @@ Usage:
     result = processor.process_file_simple("image.png")
     
     # Use as a skill
-    from ai_ocr_gml_ocr.skill import OCRSkill
+    from ocr_skill.skill import OCRSkill
     skill = OCRSkill()
     text = skill.extract_text("document.pdf")
 """

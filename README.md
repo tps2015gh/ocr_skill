@@ -1,8 +1,10 @@
-# AI OCR GML OCR Project
+# OCR Skill
 
 A powerful OCR (Optical Character Recognition) processor supporting **Thai and English** languages. 
 This project processes **PDF and Image files** (JPG, PNG, BMP, TIFF, GIF) and converts them to text 
 and markdown formats with page-by-page separation.
+
+**Now available as a reusable Python package!** Install and use in any project.
 
 ---
 
@@ -24,10 +26,11 @@ and markdown formats with page-by-page separation.
 ## 🏗️ Project Structure
 
 ```
-ai_ocr_gml_ocr/
-├── ai_ocr_gml_ocr/       # Reusable package (import this!)
+ocr_skill/
+├── ocr_skill/            # Reusable package (import this!)
 │   ├── __init__.py       # Main exports: process_file, OCRProcessor
-│   └── skill.py          # OCRSkill class for AI agents
+│   ├── skill.py          # OCRSkill class for AI agents
+│   └── models.py         # Data models
 ├── config/               # Configuration files
 │   └── config.ini        # OCR settings
 ├── examples/             # Usage examples
@@ -199,20 +202,34 @@ The following files have been processed:
 
 This OCR processor can be easily integrated into other projects as a reusable skill.
 
-### Installation
+### Method 1: Install as Python Package (Recommended)
 
 ```bash
+# Navigate to project directory
+cd D:\dev\ai_ocr_GML_OCR
+
 # Install as editable package
 pip install -e .
 
-# Or just copy the ai_ocr_gml_ocr folder to your project
+# Now you can import from anywhere!
+python -c "from ocr_skill import process_file; print('Installed!')"
+```
+
+### Method 2: Copy Package to Your Project
+
+```bash
+# Copy the ocr_skill folder to your project
+cp -r ocr_skill/ /your/project/path/
+
+# Then import in your code
+from ocr_skill import process_file
 ```
 
 ### Quick Integration
 
 #### Method 1: Simple Function
 ```python
-from ai_ocr_gml_ocr import process_file
+from ocr_skill import process_file
 
 # Process a file
 result = process_file("document.pdf")
@@ -222,7 +239,7 @@ print(text)
 
 #### Method 2: OCR Skill (Recommended for AI Agents)
 ```python
-from ai_ocr_gml_ocr.skill import OCRSkill
+from ocr_skill.skill import OCRSkill
 
 # Initialize skill
 ocr = OCRSkill(languages='tha+eng')
@@ -238,7 +255,7 @@ print(f"Output: {result.txt_output}")
 
 #### Method 3: Custom Configuration
 ```python
-from ai_ocr_gml_ocr import OCRProcessor
+from ocr_skill import OCRProcessor
 
 # Create processor with custom settings
 processor = OCRProcessor(
@@ -254,7 +271,7 @@ result = processor.process_file_simple("document.pdf")
 ### AI Agent Tool Integration
 
 ```python
-from ai_ocr_gml_ocr.skill import OCRSkill
+from ocr_skill.skill import OCRSkill
 
 class MyAgent:
     def __init__(self):
@@ -277,7 +294,7 @@ class MyAgent:
 ### Batch Processing
 
 ```python
-from ai_ocr_gml_ocr.skill import OCRSkill
+from ocr_skill.skill import OCRSkill
 
 ocr = OCRSkill()
 

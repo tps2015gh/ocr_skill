@@ -5,7 +5,7 @@ This example shows how to use the OCR Skill interface,
 perfect for AI agent integration.
 """
 
-from ai_ocr_gml_ocr.skill import OCRSkill
+from ocr_skill.skill import OCRSkill
 
 # Initialize the skill
 ocr = OCRSkill(languages='tha+eng')

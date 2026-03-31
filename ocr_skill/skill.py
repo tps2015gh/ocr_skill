@@ -1,5 +1,5 @@
 """
-AI OCR Skill - Easy integration module for other projects
+OCR Skill - Easy integration module for other projects
 
 This module provides a simplified interface for using the OCR processor
 as a skill in AI agent systems or other applications.

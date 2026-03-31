@@ -4,7 +4,7 @@ Example 4: AI Agent Integration
 This example shows how to integrate OCR as a tool in an AI agent.
 """
 
-from ai_ocr_gml_ocr.skill import OCRSkill
+from ocr_skill.skill import OCRSkill
 
 class MyAIAgent:
     """Example AI agent with OCR capability"""

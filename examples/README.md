@@ -1,6 +1,6 @@
 # OCR Skill Examples
 
-This folder contains examples showing how to use the AI OCR GML OCR package.
+This folder contains examples showing how to use the OCR Skill package.
 
 ## Examples
 
@@ -36,21 +36,21 @@ python examples/04_agent_integration.py
 
 ### Process a single file
 ```python
-from ai_ocr_gml_ocr import process_file
+from ocr_skill import process_file
 result = process_file("document.pdf")
 text = result.get_all_text()
 ```
 
 ### Use OCR Skill
 ```python
-from ai_ocr_gml_ocr.skill import OCRSkill
+from ocr_skill.skill import OCRSkill
 ocr = OCRSkill()
 text = ocr.extract_text("document.pdf")
 ```
 
 ### Custom configuration
 ```python
-from ai_ocr_gml_ocr import OCRProcessor
+from ocr_skill import OCRProcessor
 processor = OCRProcessor(languages='eng', dpi=200)
 result = processor.process_file_simple("image.png")
 ```

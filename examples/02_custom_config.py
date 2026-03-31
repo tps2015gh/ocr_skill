@@ -4,7 +4,7 @@ Example 2: Custom Configuration
 This example shows how to use custom settings for OCR processing.
 """
 
-from ai_ocr_gml_ocr import OCRProcessor
+from ocr_skill import OCRProcessor
 
 # Create processor with custom settings
 processor = OCRProcessor(

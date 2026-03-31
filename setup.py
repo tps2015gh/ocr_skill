@@ -1,5 +1,5 @@
 """
-Setup script for ai_ocr_gml_ocr package
+Setup script for ocr_skill package
 Install with: pip install -e .
 """
 
@@ -19,13 +19,13 @@ if requirements_path.exists():
     requirements = [line.strip() for line in requirements_path.read_text().splitlines() if line.strip() and not line.startswith('#')]
 
 setup(
-    name='ai_ocr_gml_ocr',
+    name='ocr_skill',
     version='1.0.0',
     author='Qwen Code AI Assistant',
     description='OCR processor for Thai and English documents (PDF, JPG, PNG, BMP, TIFF)',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/ai_ocr_gml_ocr',
+    url='https://github.com/yourusername/ocr_skill',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 4 - Production/Stable',
@@ -45,7 +45,7 @@ setup(
     install_requires=requirements,
     entry_points={
         'console_scripts': [
-            'ai-ocr=src.ocr_processor:main',
+            'ocr-skill=src.ocr_processor:main',
         ],
     },
     keywords='ocr thai english pdf image tesseract document-processing',

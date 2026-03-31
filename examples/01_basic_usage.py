@@ -4,7 +4,7 @@ Example 1: Basic Usage
 This example shows the simplest way to use the OCR processor.
 """
 
-from ai_ocr_gml_ocr import process_file
+from ocr_skill import process_file
 
 # Process a single file
 result = process_file("input_pdf/document.pdf")
