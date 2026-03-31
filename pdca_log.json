@@ -32,6 +32,61 @@
         "Improve quality"
       ],
       "status": "in_progress"
+    },
+    {
+      "week": 3,
+      "start_date": "2026-03-31",
+      "focus": "Week 1",
+      "tasks": [
+        {
+          "task": "Add feature",
+          "status": "todo"
+        }
+      ],
+      "goals": [
+        "Improve"
+      ],
+      "status": "in_progress"
+    },
+    {
+      "week": 4,
+      "start_date": "2026-03-31",
+      "focus": "Week 1",
+      "tasks": [
+        {
+          "task": "Task 1",
+          "status": "todo"
+        }
+      ],
+      "goals": [
+        "Goal 1"
+      ],
+      "status": "in_progress"
+    },
+    {
+      "week": 5,
+      "start_date": "2026-03-31",
+      "focus": "Complex Thai OCR improvement",
+      "tasks": [
+        {
+          "task": "Run initial OCR",
+          "status": "todo"
+        },
+        {
+          "task": "Apply Thai text fixes",
+          "status": "todo"
+        },
+        {
+          "task": "Test quality",
+          "status": "todo"
+        }
+      ],
+      "goals": [
+        "Achieve 85% quality",
+        "Fix Thai vowels and tone marks",
+        "Convert Thai numerals"
+      ],
+      "status": "in_progress"
     }
   ],
   "agent_activities": [
@@ -46,6 +101,48 @@
       "agent": "Tech Lead",
       "action": "planning",
       "details": "Week 2: Week 1"
+    },
+    {
+      "timestamp": "2026-03-31T16:10:22.125234",
+      "agent": "Tech Lead",
+      "action": "planning",
+      "details": "Week 3: Week 1"
+    },
+    {
+      "timestamp": "2026-03-31T16:10:23.241060",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Applied: numerals, legal terms"
+    },
+    {
+      "timestamp": "2026-03-31T16:10:24.250976",
+      "agent": "QA",
+      "action": "testing",
+      "details": "Quality: 100%"
+    },
+    {
+      "timestamp": "2026-03-31T16:10:35.332091",
+      "agent": "Tech Lead",
+      "action": "planning",
+      "details": "Week 4: Week 1"
+    },
+    {
+      "timestamp": "2026-03-31T16:10:35.423604",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Applied: numerals"
+    },
+    {
+      "timestamp": "2026-03-31T16:10:35.426604",
+      "agent": "QA",
+      "action": "testing",
+      "details": "Quality: 100%"
+    },
+    {
+      "timestamp": "2026-03-31T16:14:56.633519",
+      "agent": "Tech Lead",
+      "action": "planning",
+      "details": "Week 5: Complex Thai OCR improvement"
     }
   ]
 }

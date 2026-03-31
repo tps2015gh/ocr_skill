@@ -1,18 +1,27 @@
 """
-Agent Dashboard Web App - Task-based Real-time Monitoring
-==========================================================
+Agent Dashboard Web App - Real-time Agent Monitoring
+=====================================================
 
-Web dashboard showing agents moving between task tables.
+Web dashboard showing AI agents working in real-time on tasks.
+Agents move between task tables as they work.
 
 Usage:
     python ai_tools/web_dashboard.py
     
 Then open: http://localhost:8000
+
+Features:
+- Real-time agent position updates (every 2 seconds)
+- Task-based workflow visualization
+- Queue counts showing how many agents at each task
+- Activity log showing recent agent actions
+- Simulate buttons to test agent movements
 """
 
 import os
 import sys
 import json
+import random
 import threading
 import time
 from pathlib import Path
@@ -20,37 +29,60 @@ from datetime import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import webbrowser
 
-# Dashboard data file
+# Dashboard data file - stores agent positions and task status
 DASHBOARD_DATA = Path("dashboard_data.json")
 
 
 class DashboardData:
-    """Manage dashboard data"""
+    """
+    Manage dashboard data including agent positions and task status.
+    Data persists across page refreshes via JSON file.
+    """
     
     def __init__(self):
         self.data = self._load()
     
     def _load(self):
-        """Load dashboard data"""
+        """Load dashboard data from JSON file"""
         if DASHBOARD_DATA.exists():
             with open(DASHBOARD_DATA, 'r', encoding='utf-8') as f:
                 return json.load(f)
         
-        import random
-        # Random starting positions for each agent
+        # Generate random starting positions for each agent
+        # This ensures agents don't all start at same location (0,0)
         positions = [
-            {"x": 80, "y": 350},
-            {"x": 550, "y": 350},
-            {"x": 300, "y": 380}
+            {"x": 80, "y": 350},   # Bottom left
+            {"x": 550, "y": 350},  # Bottom right
+            {"x": 300, "y": 380}   # Bottom center
         ]
         random.shuffle(positions)
         
         return {
+            # Three AI agents with random starting positions
             "agents": {
-                "Tech Lead": {"status": "idle", "x": positions[0]["x"], "y": positions[0]["y"], "task": "", "last_update": ""},
-                "Developer": {"status": "idle", "x": positions[1]["x"], "y": positions[1]["y"], "task": "", "last_update": ""},
-                "QA": {"status": "idle", "x": positions[2]["x"], "y": positions[2]["y"], "task": "", "last_update": ""}
+                "Tech Lead": {
+                    "status": "idle", 
+                    "x": positions[0]["x"], 
+                    "y": positions[0]["y"], 
+                    "task": "", 
+                    "last_update": ""
+                },
+                "Developer": {
+                    "status": "idle", 
+                    "x": positions[1]["x"], 
+                    "y": positions[1]["y"], 
+                    "task": "", 
+                    "last_update": ""
+                },
+                "QA": {
+                    "status": "idle", 
+                    "x": positions[2]["x"], 
+                    "y": positions[2]["y"], 
+                    "task": "", 
+                    "last_update": ""
+                }
             },
+            # Five task tables arranged in workflow pattern
             "tasks": [
                 {"id": "plan_week", "name": "1. Plan Week", "x": 100, "y": 80, "color": "#3498db", "queue": 0},
                 {"id": "write_code", "name": "2. Write Code", "x": 280, "y": 80, "color": "#e74c3c", "queue": 0},
@@ -58,7 +90,9 @@ class DashboardData:
                 {"id": "review_week", "name": "4. Review Week", "x": 190, "y": 200, "color": "#2ecc71", "queue": 0},
                 {"id": "fix_bug", "name": "5. Fix Bug", "x": 370, "y": 200, "color": "#9b59b6", "queue": 0}
             ],
+            # Activity log (last 50 entries)
             "log": [],
+            # Statistics
             "stats": {
                 "total_actions": 0,
                 "current_week": 0,
@@ -67,34 +101,43 @@ class DashboardData:
         }
     
     def _save(self):
-        """Save dashboard data"""
+        """Save dashboard data to JSON file"""
         with open(DASHBOARD_DATA, 'w', encoding='utf-8') as f:
             json.dump(self.data, f, indent=2, ensure_ascii=False)
     
     def update_agent(self, agent: str, status: str, task: str = "", task_id: str = ""):
-        """Update agent status and position"""
+        """
+        Update agent status and position.
+        
+        Args:
+            agent: Agent name (Tech Lead, Developer, QA)
+            status: Agent status (idle, working, busy)
+            task: Current task description
+            task_id: Task ID to move agent to (e.g., 'plan_week')
+        """
         if agent not in self.data["agents"]:
             self.data["agents"][agent] = {"status": "idle", "x": 50, "y": 50, "task": "", "last_update": ""}
         
-        # Find task position
+        # Move agent to task position if task_id provided
         if task_id:
             for t in self.data["tasks"]:
                 if t["id"] == task_id:
                     self.data["agents"][agent]["x"] = t["x"]
                     self.data["agents"][agent]["y"] = t["y"]
                     
-                    # Update queue count
+                    # Update queue count (how many agents working on this task)
                     if status == "working":
                         t["queue"] = t.get("queue", 0) + 1
                     else:
                         t["queue"] = max(0, t.get("queue", 0) - 1)
                     break
         
+        # Update agent status
         self.data["agents"][agent]["status"] = status
         self.data["agents"][agent]["task"] = task
         self.data["agents"][agent]["last_update"] = datetime.now().strftime("%H:%M:%S")
         
-        # Add to log
+        # Add to activity log
         self.data["log"].insert(0, {
             "time": datetime.now().strftime("%H:%M:%S"),
             "agent": agent,
@@ -102,7 +145,7 @@ class DashboardData:
             "task": task
         })
         
-        # Keep last 50 logs
+        # Keep last 50 log entries
         if len(self.data["log"]) > 50:
             self.data["log"] = self.data["log"][:50]
         
@@ -119,24 +162,29 @@ dashboard = DashboardData()
 
 
 class DashboardHandler(SimpleHTTPRequestHandler):
-    """HTTP handler for dashboard"""
+    """HTTP request handler for dashboard web server"""
     
     def do_GET(self):
-        """Handle GET requests"""
+        """Handle GET requests for dashboard pages and API"""
         if self.path == '/':
+            # Serve main dashboard HTML
             self.send_response(200)
             self.send_header('Content-type', 'text/html; charset=utf-8')
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
             self.end_headers()
             self.wfile.write(get_html().encode('utf-8'))
         
         elif self.path == '/api/data':
+            # Return current dashboard data as JSON
             self.send_response(200)
             self.send_header('Content-type', 'application/json; charset=utf-8')
             self.end_headers()
             self.wfile.write(json.dumps(dashboard.get_data(), ensure_ascii=False).encode('utf-8'))
         
-        elif self.path == '/api/update':
-            # Parse query params
+        elif self.path.startswith('/api/update'):
+            # Update agent status from query parameters
             from urllib.parse import parse_qs, urlparse
             params = parse_qs(urlparse(self.path).query)
             
@@ -157,7 +205,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 
 
 def get_html():
-    """Generate dashboard HTML"""
+    """Generate dashboard HTML page with embedded CSS and JavaScript"""
     html = """<!DOCTYPE html>
 <html>
 <head>
@@ -373,35 +421,35 @@ def get_html():
         
         <div class="dashboard">
             <div class="visualization" id="vis">
-                <!-- Workflow arrows -->
+                <!-- Workflow arrows showing task flow -->
                 <div class="workflow-arrow" style="left: 220px; top: 60px;">→</div>
                 <div class="workflow-arrow" style="left: 400px; top: 60px;">→</div>
                 <div class="workflow-arrow" style="left: 380px; top: 140px;">↘</div>
                 <div class="workflow-arrow" style="left: 260px; top: 140px;">↙</div>
                 
-                <!-- Task tables -->
+                <!-- Task tables (static positions) -->
                 <div class="task-table" id="task-plan_week" style="left: 10px; top: 60px; border-color: #3498db;">
                     <div class="task-name">1. Plan Week</div>
-                    <div class="task-queue">0 in queue</div>
+                    <div class="task-queue">0 working</div>
                 </div>
                 <div class="task-table" id="task-write_code" style="left: 190px; top: 60px; border-color: #e74c3c;">
                     <div class="task-name">2. Write Code</div>
-                    <div class="task-queue">0 in queue</div>
+                    <div class="task-queue">0 working</div>
                 </div>
                 <div class="task-table" id="task-test_quality" style="left: 370px; top: 60px; border-color: #f1c40f;">
                     <div class="task-name">3. Test Quality</div>
-                    <div class="task-queue">0 in queue</div>
+                    <div class="task-queue">0 working</div>
                 </div>
                 <div class="task-table" id="task-review_week" style="left: 100px; top: 180px; border-color: #2ecc71;">
                     <div class="task-name">4. Review Week</div>
-                    <div class="task-queue">0 in queue</div>
+                    <div class="task-queue">0 working</div>
                 </div>
                 <div class="task-table" id="task-fix_bug" style="left: 280px; top: 180px; border-color: #9b59b6;">
                     <div class="task-name">5. Fix Bug</div>
-                    <div class="task-queue">0 in queue</div>
+                    <div class="task-queue">0 working</div>
                 </div>
                 
-                <!-- Agents will be added here -->
+                <!-- Agents will be added here by JavaScript -->
             </div>
             
             <div class="side-panel">
@@ -457,12 +505,14 @@ def get_html():
     </div>
     
     <script>
+        // Agent emoji icons
         const agentIcons = {
             "Tech Lead": "\\u{1F3AF}",
             "Developer": "\\u{1F4BB}",
             "QA": "\\u{2705}"
         };
         
+        // Update dashboard with latest data from server
         function updateDashboard() {
             console.log('Updating dashboard...');
             fetch('/api/data?t=' + new Date().getTime())
@@ -484,7 +534,7 @@ def get_html():
                     // Remove old agents
                     document.querySelectorAll('.agent').forEach(e => e.remove());
                     
-                    // Add agents
+                    // Add agents at their current positions
                     for (const [name, info] of Object.entries(data.agents)) {
                         const agent = document.createElement('div');
                         agent.className = 'agent';
@@ -498,12 +548,12 @@ def get_html():
                         document.getElementById('vis').appendChild(agent);
                     }
                     
-                    // Update stats
+                    // Update statistics
                     document.getElementById('stat-actions').textContent = data.stats.total_actions;
                     document.getElementById('stat-week').textContent = data.stats.current_week || 0;
                     document.getElementById('stat-quality').textContent = data.stats.quality || '0%';
                     
-                    // Update task list
+                    // Update task list in side panel
                     const taskList = document.getElementById('task-list');
                     taskList.innerHTML = '';
                     data.tasks.forEach(task => {
@@ -518,7 +568,7 @@ def get_html():
                         `;
                     });
                     
-                    // Update agents list
+                    // Update agents list in side panel
                     const agentsList = document.getElementById('agents-list');
                     agentsList.innerHTML = '';
                     for (const [name, info] of Object.entries(data.agents)) {
@@ -533,7 +583,7 @@ def get_html():
                         `;
                     }
                     
-                    // Update log
+                    // Update activity log
                     const logList = document.getElementById('log-list');
                     logList.innerHTML = '';
                     data.log.slice(0, 15).forEach(entry => {
@@ -545,26 +595,33 @@ def get_html():
                             </div>
                         `;
                     });
-                });
+                })
+                .catch(err => console.error('Dashboard update error:', err));
         }
         
+        // Get color based on agent status
         function getStatusColor(status) {
             if (status === 'working') return '#2ecc71';
             if (status === 'busy') return '#f39c12';
             return '#95a5a6';
         }
         
+        // Simulate agent working on a task
         function simulateAgent(agent, task, taskId) {
+            console.log(`Simulating ${agent} doing ${task} at ${taskId}`);
+            
+            // Set agent to working status
             fetch(`/api/update?agent=${encodeURIComponent(agent)}&status=working&task=${encodeURIComponent(task)}&task_id=${taskId}`)
                 .then(r => r.json())
                 .then(() => {
+                    // After 2 seconds, set back to idle
                     setTimeout(() => {
                         fetch(`/api/update?agent=${encodeURIComponent(agent)}&status=idle&task=Done!&task_id=${taskId}`);
                     }, 2000);
                 });
         }
         
-        // Initial update and auto-refresh
+        // Initial update and auto-refresh every 2 seconds
         updateDashboard();
         setInterval(updateDashboard, 2000);
     </script>
@@ -574,21 +631,26 @@ def get_html():
 
 
 def run_server(port=8000):
-    """Run dashboard server"""
+    """
+    Run dashboard web server.
+    
+    Args:
+        port: Port number to listen on (default: 8000)
+    """
     server = HTTPServer(('localhost', port), DashboardHandler)
-    print(f"\\n{'='*60}")
+    print(f"\n{'='*60}")
     print(f"AI Agent Dashboard")
     print(f"{'='*60}")
-    print(f"\\nOpening dashboard at: http://localhost:{port}")
-    print(f"\\nPress Ctrl+C to stop\\n")
+    print(f"\nOpening dashboard at: http://localhost:{port}")
+    print(f"\nPress Ctrl+C to stop\n")
     
-    # Open browser
+    # Open browser automatically
     webbrowser.open(f'http://localhost:{port}')
     
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\\n\\nDashboard stopped")
+        print("\n\nDashboard stopped")
         server.shutdown()
 
 
