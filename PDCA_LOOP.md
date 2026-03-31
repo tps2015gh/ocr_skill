@@ -13,6 +13,33 @@ This guide enables AI agents to continuously improve **Complex Thai OCR** text q
 
 ---
 
+## 🚀 Quick Start (Executable)
+
+### Run Full PDCA Cycle
+
+```bash
+# Start new task (auto-runs all agents)
+python run_pdca.py --input input_pdf/document.pdf --target-quality 0.95
+
+# Resume existing task
+python run_pdca.py --resume
+```
+
+### Run Specific Agent
+
+```bash
+# Manager agent only
+python run_pdca.py --agent manager --resume
+
+# Programmer agent only
+python run_pdca.py --agent programmer --resume
+
+# QA agent only
+python run_pdca.py --agent qa --resume
+```
+
+---
+
 ## 📋 Agent Roles & Tasks
 
 ### 1. **Manager Agent** (Team Lead) 🎯
