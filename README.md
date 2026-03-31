@@ -423,12 +423,14 @@ This project was developed using a multi-agent approach:
 - Non-Latin/Non-Thai scripts without language packs
 
 **💡 Pro Tip:** For complex layouts or handwriting, see [`ADVANCED_OCR.md`](ADVANCED_OCR.md) which covers:
-- PaddleOCR integration (free, supports handwriting + layout)
+- PaddleOCR integration (free, supports handwriting + layout) - **Optional add-on**
 - Azure Form Recognizer (best for forms/tables)
 - Google Cloud Vision (best for handwriting)
 - Hybrid approach combining multiple engines
 
-**Bottom Line:** OCR Skill is a practical, well-engineered solution for Thai-English document processing. It excels at batch operations and integrates smoothly with AI agent workflows. For best results, use with printed documents at 150+ DPI and consider AI post-processing for critical accuracy needs.
+**🔧 Current Engine:** This project uses **Tesseract OCR** (not PaddleOCR by default). PaddleOCR support is available as an optional advanced feature.
+
+**Bottom Line:** OCR Skill is a practical, well-engineered solution for Thai-English document processing using Tesseract OCR. It excels at batch operations and integrates smoothly with AI agent workflows. For best results, use with printed documents at 150+ DPI and consider AI post-processing for critical accuracy needs. For complex layouts or handwriting, add PaddleOCR (see ADVANCED_OCR.md).
 
 ---
 

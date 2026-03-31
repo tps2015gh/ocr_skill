@@ -1,17 +1,64 @@
 # Advanced OCR: Layout & Handwriting Support
 
-This guide shows how to extend OCR Skill to support **complex layouts** and **handwritten text**.
+This guide shows how to **extend OCR Skill** to support **complex layouts** and **handwritten text**.
+
+> **⚠️ Important:** OCR Skill uses **Tesseract OCR by default**. This guide shows optional add-ons for advanced features.
 
 ---
 
-## 🎯 Current Limitations
+## 🎯 Current Limitations (Tesseract OCR)
 
-**Tesseract OCR (Current Engine):**
+**Default Engine (Tesseract):**
 - ❌ Poor with complex layouts (tables, forms, multi-column)
 - ❌ Cannot recognize handwritten text
 - ❌ Loses structure information
 - ✅ Fast and free
 - ✅ Good for printed Thai/English
+
+---
+
+## 📊 Quick Comparison
+
+| Feature | Default (Tesseract) | With PaddleOCR Add-on | Cloud APIs |
+|---------|---------------------|-----------------------|------------|
+| **Layout** | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Handwriting** | ❌ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Thai** | ✅ | ✅ | ✅ |
+| **Cost** | Free | Free | Paid |
+| **Speed** | Fast | Fast | Medium |
+| **Setup** | Easy | Medium | Easy |
+
+**Default Installation:** Tesseract OCR only (sufficient for most printed documents)
+
+**Add PaddleOCR When:** You need handwriting recognition or complex layout preservation
+
+---
+
+## 📦 Installation Options
+
+### Option A: Default (Tesseract Only) - Already Installed ✅
+
+```bash
+# This is what you have now - sufficient for printed documents
+pip install pymupdf pytesseract pillow
+```
+
+### Option B: Add PaddleOCR (For Advanced Features)
+
+```bash
+# Add handwriting and layout support
+pip install paddlepaddle paddleocr opencv-python
+```
+
+### Option C: Cloud APIs (Best Accuracy, Paid)
+
+```bash
+# Azure Form Recognizer
+pip install azure-ai-formrecognizer
+
+# Google Cloud Vision
+pip install google-cloud-vision
+```
 
 ---
 
@@ -448,13 +495,13 @@ for i, table in enumerate(tables):
 
 ## 📊 Comparison
 
-| Solution | Layout | Handwriting | Thai | Cost | Speed |
-|----------|--------|-------------|------|------|-------|
-| **Tesseract** | ⭐⭐ | ❌ | ✅ | Free | Fast |
-| **PaddleOCR** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✅ | Free | Fast |
-| **Azure Form** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ✅ | Paid | Medium |
-| **Google Vision** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ✅ | Paid | Medium |
-| **Table Detection** | ⭐⭐⭐⭐ | ❌ | ✅ | Free | Fast |
+| Solution | Layout | Handwriting | Thai | Cost | Speed | Included |
+|----------|--------|-------------|------|------|-------|----------|
+| **Tesseract** | ⭐⭐ | ❌ | ✅ | Free | Fast | ✅ Yes (Default) |
+| **PaddleOCR** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✅ | Free | Fast | ❌ Optional |
+| **Azure Form** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ✅ | Paid | Medium | ❌ Optional |
+| **Google Vision** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ✅ | Paid | Medium | ❌ Optional |
+| **Table Detection** | ⭐⭐⭐⭐ | ❌ | ✅ | Free | Fast | ❌ Optional |
 
 ---
 
