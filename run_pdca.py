@@ -167,6 +167,27 @@ def calculate_quality(text: str) -> float:
     return max(0.0, min(1.0, score))
 
 
+def run_initial_ocr(input_file: str):
+    """Run initial OCR on input file"""
+    try:
+        from ocr_skill import process_file
+        result = process_file(input_file, show_progress=False)
+        
+        # Save OCR output
+        output_txt = f"output_txt/{Path(input_file).stem}.txt"
+        Path("output_txt").mkdir(exist_ok=True)
+        
+        with open(output_txt, 'w', encoding='utf-8') as f:
+            f.write(result.get_all_text())
+        
+        print(f"✓ OCR complete: {output_txt}")
+        print(f"  Pages: {result.total_pages}")
+        print(f"  Characters: {len(result.get_all_text())}")
+        
+    except Exception as e:
+        print(f"❌ OCR failed: {e}")
+
+
 def run_manager(state: PDCAState, action: str = 'start'):
     """Manager Agent tasks"""
     print("\n" + "="*60)
@@ -179,6 +200,10 @@ def run_manager(state: PDCAState, action: str = 'start'):
         print(f"✓ Task ID: {state.state['task_id']}")
         print(f"✓ Target quality: {state.state['target_quality']:.0%}")
         print(f"✓ Phase: {state.state['current_phase']}")
+        
+        # Run initial OCR
+        print("\n  Running initial OCR...")
+        run_initial_ocr(state.state['input_file'])
         
     elif action == 'review':
         print("Task: Review current state")
@@ -339,19 +364,27 @@ def main():
         state.create(task_id, args.input, args.target_quality)
         print(f"✓ Created task: {task_id}")
     
-    # Run agents
-    if args.agent == 'manager' or args.agent == 'auto':
-        if state.state['current_phase'] == 'plan':
-            run_manager(state, 'review')
-            run_manager(state, 'decide')
+    # Run agents in sequence
+    print("\n" + "="*60)
+    print("🔄 STARTING PDCA CYCLE")
+    print("="*60)
     
-    if args.agent == 'programmer' or args.agent == 'auto':
-        if state.state['current_phase'] == 'do':
-            run_programmer(state)
+    # Phase: PLAN (Manager)
+    if state.state['current_phase'] == 'plan':
+        run_manager(state, 'review')
+        run_manager(state, 'decide')
     
-    if args.agent == 'qa' or args.agent == 'auto':
-        if state.state['current_phase'] == 'check':
-            run_qa(state)
+    # Phase: DO (Programmer)
+    if state.state['current_phase'] == 'do':
+        run_programmer(state)
+    
+    # Phase: CHECK (QA)
+    if state.state['current_phase'] == 'check':
+        run_qa(state)
+    
+    # Phase: ACT (Manager decision)
+    if state.state['current_phase'] == 'act':
+        run_manager(state, 'decide')
     
     # Print status
     print("\n" + "="*60)
