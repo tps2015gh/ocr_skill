@@ -201,8 +201,14 @@ C:\Program Files\Tesseract-OCR\tessdata\tha.traineddata
 
 ---
 
-## 👥 AI Agent Team Roles
+## 👥 Project Team
 
+### Human Team
+| Role | Responsibilities |
+|------|------------------|
+| **Supervisor Director** | Project oversight, requirements definition, final approval |
+
+### AI Agent Team
 This project was developed using a multi-agent approach:
 
 | Role | Responsibilities |
@@ -216,14 +222,14 @@ This project was developed using a multi-agent approach:
 
 ## 🤖 About the AI Assistant
 
-### Model: Qwen Code
+### Model: Qwen Code (قwen)
 **Developed by Alibaba Group**
 
 #### My Role in This Project:
 1. **Project Setup**: Created folder structure and git configuration
 2. **Dependency Management**: Installed and configured OCR libraries
 3. **Code Development**: Wrote the OCR processor script with progress tracking
-4. **Processing**: Executed batch OCR on 3 large PDF files
+4. **Processing**: Executed batch OCR on 3 large PDF files (455 pages total)
 5. **Documentation**: Created comprehensive README and usage instructions
 
 #### My Opinion on This Solution:
@@ -248,6 +254,59 @@ This project was developed using a multi-agent approach:
 
 ---
 
+## 📌 Important Notes
+
+### About Tesseract OCR
+This project uses **Tesseract OCR** via the `pytesseract` Python wrapper:
+- Tesseract is an open-source OCR engine developed by Google
+- Supports 100+ languages including Thai (`tha`) and English (`eng`)
+- Language data files must be installed separately (`.traineddata` files)
+- Accuracy depends on image quality, DPI settings, and language complexity
+
+**Tesseract Installation Path (Windows):**
+```
+C:\Program Files\Tesseract-OCR\tesseract.exe
+```
+
+**Language Files Location:**
+```
+C:\Program Files\Tesseract-OCR\tessdata\tha.traineddata
+C:\Program Files\Tesseract-OCR\tessdata\eng.traineddata
+```
+
+### 💡 Post-OCR Accuracy Improvement with AI
+
+**Observation:** After initial OCR processing with Tesseract, using an **online AI model** (such as ChatGPT, Claude, or Qwen) to review and adjust the OCR output can significantly improve accuracy, especially for:
+
+1. **Thai Language Characters**: Thai script has complex vowels and tone marks that OCR may misrecognize
+2. **Numbers and Dates**: Thai numerals vs. Arabic numerals confusion
+3. **Special Characters**: Legal document symbols, bullet points, formatting
+4. **Context Understanding**: AI can correct words based on document context
+
+**Recommended Workflow:**
+```
+PDF → Tesseract OCR → Raw Text → AI Model Review → Corrected Text → Final Output
+```
+
+**Example AI Prompt for Correction:**
+```
+Please review and correct the following Thai OCR text. Fix any:
+- Misrecognized Thai characters
+- Incorrect numbers or dates
+- Broken words or spacing issues
+- Context-inappropriate words
+
+Keep the original meaning and format intact.
+```
+
+**Why This Works:**
+- Large Language Models (LLMs) have strong language understanding
+- Can infer correct words from context
+- Understands Thai grammar and common document patterns
+- More accurate than OCR alone for ambiguous characters
+
+---
+
 ## 📝 License
 
 This project is provided as-is for educational and practical use.
@@ -263,5 +322,5 @@ For issues or questions:
 
 ---
 
-**Last Updated:** March 31, 2026  
+**Last Updated:** March 31, 2026
 **Version:** 1.0.0
