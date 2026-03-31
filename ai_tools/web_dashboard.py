@@ -36,18 +36,27 @@ class DashboardData:
             with open(DASHBOARD_DATA, 'r', encoding='utf-8') as f:
                 return json.load(f)
         
+        import random
+        # Random starting positions for each agent
+        positions = [
+            {"x": 80, "y": 350},
+            {"x": 550, "y": 350},
+            {"x": 300, "y": 380}
+        ]
+        random.shuffle(positions)
+        
         return {
             "agents": {
-                "Tech Lead": {"status": "idle", "x": 50, "y": 50, "task": "", "last_update": ""},
-                "Developer": {"status": "idle", "x": 50, "y": 50, "task": "", "last_update": ""},
-                "QA": {"status": "idle", "x": 50, "y": 50, "task": "", "last_update": ""}
+                "Tech Lead": {"status": "idle", "x": positions[0]["x"], "y": positions[0]["y"], "task": "", "last_update": ""},
+                "Developer": {"status": "idle", "x": positions[1]["x"], "y": positions[1]["y"], "task": "", "last_update": ""},
+                "QA": {"status": "idle", "x": positions[2]["x"], "y": positions[2]["y"], "task": "", "last_update": ""}
             },
             "tasks": [
-                {"id": "plan_week", "name": "Plan Week", "x": 100, "y": 100, "color": "#3498db", "queue": 0},
-                {"id": "apply_fixes", "name": "Apply Fixes", "x": 300, "y": 100, "color": "#e74c3c", "queue": 0},
-                {"id": "test_quality", "name": "Test Quality", "x": 500, "y": 100, "color": "#f1c40f", "queue": 0},
-                {"id": "review_week", "name": "Review Week", "x": 200, "y": 250, "color": "#2ecc71", "queue": 0},
-                {"id": "batch_process", "name": "Batch Process", "x": 400, "y": 250, "color": "#9b59b6", "queue": 0}
+                {"id": "plan_week", "name": "1. Plan Week", "x": 100, "y": 80, "color": "#3498db", "queue": 0},
+                {"id": "apply_fixes", "name": "2. Apply Fixes", "x": 280, "y": 80, "color": "#e74c3c", "queue": 0},
+                {"id": "test_quality", "name": "3. Test Quality", "x": 460, "y": 80, "color": "#f1c40f", "queue": 0},
+                {"id": "review_week", "name": "4. Review Week", "x": 190, "y": 200, "color": "#2ecc71", "queue": 0},
+                {"id": "batch_process", "name": "5. Batch Process", "x": 370, "y": 200, "color": "#9b59b6", "queue": 0}
             ],
             "log": [],
             "stats": {
@@ -175,6 +184,12 @@ def get_html():
             text-align: center;
             color: #888;
             margin-bottom: 30px;
+        }
+        .workflow-arrow {
+            position: absolute;
+            font-size: 1.5em;
+            color: #666;
+            opacity: 0.5;
         }
         .dashboard {
             display: grid;
@@ -355,6 +370,12 @@ def get_html():
         
         <div class="dashboard">
             <div class="visualization" id="vis">
+                <!-- Workflow arrows -->
+                <div class="workflow-arrow" style="left: 220px; top: 60px;">→</div>
+                <div class="workflow-arrow" style="left: 400px; top: 60px;">→</div>
+                <div class="workflow-arrow" style="left: 380px; top: 140px;">↘</div>
+                <div class="workflow-arrow" style="left: 260px; top: 140px;">↙</div>
+                
                 <!-- Task tables will be added here -->
                 <!-- Agents will be added here -->
             </div>
