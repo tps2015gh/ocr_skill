@@ -87,10 +87,11 @@ def generate_temp_work(duration_seconds: int = 60):
             # Wait a bit before next task
             time.sleep(2)
             
-            # Mark tasks as complete
-            tools._log_activity("Tech Lead", "idle", "Task complete", "")
-            tools._log_activity("Developer", "idle", "Task complete", "")
-            tools._log_activity("QA", "idle", "Task complete", "")
+            # Mark tasks as complete and return to rest
+            print(f"[{iteration}] 😴 Agents returning to rest...")
+            tools._log_activity("Tech Lead", "resting", "Resting", "")
+            tools._log_activity("Developer", "resting", "Resting", "")
+            tools._log_activity("QA", "resting", "Resting", "")
             
             time.sleep(1)
     

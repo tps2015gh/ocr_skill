@@ -91,58 +91,604 @@
   ],
   "agent_activities": [
     {
-      "timestamp": "2026-03-31T16:07:46.816195",
-      "agent": "Tech Lead",
-      "action": "planning",
-      "details": "Week 1: Test"
+      "timestamp": "2026-03-31T16:18:44.533375",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
     },
     {
-      "timestamp": "2026-03-31T16:08:11.682834",
+      "timestamp": "2026-03-31T16:18:45.548409",
       "agent": "Tech Lead",
-      "action": "planning",
-      "details": "Week 2: Week 1"
+      "action": "working",
+      "details": "Updating roadmap"
     },
     {
-      "timestamp": "2026-03-31T16:10:22.125234",
-      "agent": "Tech Lead",
-      "action": "planning",
-      "details": "Week 3: Week 1"
-    },
-    {
-      "timestamp": "2026-03-31T16:10:23.241060",
+      "timestamp": "2026-03-31T16:18:45.551307",
       "agent": "Developer",
       "action": "working",
-      "details": "Applied: numerals, legal terms"
+      "details": "Writing feature"
     },
     {
-      "timestamp": "2026-03-31T16:10:24.250976",
+      "timestamp": "2026-03-31T16:18:45.554339",
       "agent": "QA",
-      "action": "testing",
-      "details": "Quality: 100%"
+      "action": "working",
+      "details": "Running tests"
     },
     {
-      "timestamp": "2026-03-31T16:10:35.332091",
+      "timestamp": "2026-03-31T16:18:47.569257",
       "agent": "Tech Lead",
-      "action": "planning",
-      "details": "Week 4: Week 1"
+      "action": "idle",
+      "details": "Task complete"
     },
     {
-      "timestamp": "2026-03-31T16:10:35.423604",
+      "timestamp": "2026-03-31T16:18:47.572257",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:47.575290",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:48.583698",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Reviewing code"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:48.588698",
       "agent": "Developer",
       "action": "working",
-      "details": "Applied: numerals"
+      "details": "Fixing bug #123"
     },
     {
-      "timestamp": "2026-03-31T16:10:35.426604",
+      "timestamp": "2026-03-31T16:18:48.592876",
       "agent": "QA",
-      "action": "testing",
-      "details": "Quality: 100%"
+      "action": "working",
+      "details": "Testing feature"
     },
     {
-      "timestamp": "2026-03-31T16:14:56.633519",
+      "timestamp": "2026-03-31T16:18:50.605591",
       "agent": "Tech Lead",
-      "action": "planning",
-      "details": "Week 5: Complex Thai OCR improvement"
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:50.615605",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:50.621697",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:51.634328",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Reviewing code"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:51.637498",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:51.641495",
+      "agent": "QA",
+      "action": "working",
+      "details": "Running tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:53.649235",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:53.653173",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:53.657175",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:54.671959",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Meeting with team"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:54.674995",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Refactoring code"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:54.679014",
+      "agent": "QA",
+      "action": "working",
+      "details": "Testing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:56.697342",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:56.704376",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:56.711927",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:57.725996",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:57.741771",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:57.749697",
+      "agent": "QA",
+      "action": "working",
+      "details": "Quality check"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:59.757498",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:59.761548",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:18:59.765763",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:00.784447",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Reviewing code"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:00.788420",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:00.791410",
+      "agent": "QA",
+      "action": "working",
+      "details": "Testing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:02.794475",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:02.798445",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:02.801476",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:03.819010",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:03.822980",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:03.826980",
+      "agent": "QA",
+      "action": "working",
+      "details": "Testing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:05.843105",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:05.846107",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:05.849670",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:06.854815",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Planning sprint"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:06.858813",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:06.862847",
+      "agent": "QA",
+      "action": "working",
+      "details": "Testing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:08.881284",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:08.887282",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:08.890314",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:09.901472",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:09.905504",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Debugging issue"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:09.908470",
+      "agent": "QA",
+      "action": "working",
+      "details": "Verifying fix"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:11.916536",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:11.919536",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:11.922537",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:12.939788",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Meeting with team"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:12.943793",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Refactoring code"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:12.947796",
+      "agent": "QA",
+      "action": "working",
+      "details": "Quality check"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:14.957443",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:14.960420",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:14.965424",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:15.974730",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Reviewing code"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:15.978663",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:15.982630",
+      "agent": "QA",
+      "action": "working",
+      "details": "Quality check"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:17.998877",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:18.007831",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:18.010832",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:19.013850",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:19.017849",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:19.021848",
+      "agent": "QA",
+      "action": "working",
+      "details": "Running tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:21.036811",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:21.041808",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:21.044807",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:22.052889",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Meeting with team"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:22.057258",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Debugging issue"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:22.059880",
+      "agent": "QA",
+      "action": "working",
+      "details": "Running tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:24.072285",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:24.075215",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:24.078215",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:25.096489",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:25.101313",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:25.105217",
+      "agent": "QA",
+      "action": "working",
+      "details": "Quality check"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:27.121285",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:27.132200",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:27.139238",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:28.150329",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:28.154249",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Refactoring code"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:28.157264",
+      "agent": "QA",
+      "action": "working",
+      "details": "Running tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:30.162812",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:30.170443",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:30.173446",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:31.191554",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Meeting with team"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:31.195586",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Refactoring code"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:31.200553",
+      "agent": "QA",
+      "action": "working",
+      "details": "Quality check"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:33.209948",
+      "agent": "Tech Lead",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:33.213950",
+      "agent": "Developer",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:33.217952",
+      "agent": "QA",
+      "action": "idle",
+      "details": "Task complete"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:34.233735",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Meeting with team"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:34.236736",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:19:34.241066",
+      "agent": "QA",
+      "action": "working",
+      "details": "Quality check"
     }
   ]
 }

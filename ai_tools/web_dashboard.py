@@ -51,34 +51,34 @@ class DashboardData:
         # Generate random starting positions for each agent
         # This ensures agents don't all start at same location (0,0)
         positions = [
-            {"x": 80, "y": 350},   # Bottom left
-            {"x": 550, "y": 350},  # Bottom right
-            {"x": 300, "y": 380}   # Bottom center
+            {"x": 80, "y": 350},   # Bottom left - Rest area
+            {"x": 300, "y": 380},  # Bottom center - Rest area
+            {"x": 550, "y": 350}   # Bottom right - Rest area
         ]
         random.shuffle(positions)
         
         return {
-            # Three AI agents with random starting positions
+            # Three AI agents with random starting positions (rest area at bottom)
             "agents": {
                 "Tech Lead": {
-                    "status": "idle", 
+                    "status": "resting", 
                     "x": positions[0]["x"], 
                     "y": positions[0]["y"], 
-                    "task": "", 
+                    "task": "Resting", 
                     "last_update": ""
                 },
                 "Developer": {
-                    "status": "idle", 
+                    "status": "resting", 
                     "x": positions[1]["x"], 
                     "y": positions[1]["y"], 
-                    "task": "", 
+                    "task": "Resting", 
                     "last_update": ""
                 },
                 "QA": {
-                    "status": "idle", 
+                    "status": "resting", 
                     "x": positions[2]["x"], 
                     "y": positions[2]["y"], 
-                    "task": "", 
+                    "task": "Resting", 
                     "last_update": ""
                 }
             },
@@ -241,6 +241,19 @@ def get_html():
             font-size: 1.5em;
             color: #666;
             opacity: 0.5;
+        }
+        .rest-area {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(149, 165, 166, 0.2);
+            border: 2px dashed #7f8c8d;
+            border-radius: 10px;
+            padding: 10px 30px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #7f8c8d;
         }
         .dashboard {
             display: grid;
@@ -427,6 +440,11 @@ def get_html():
                 <div class="workflow-arrow" style="left: 380px; top: 140px;">↘</div>
                 <div class="workflow-arrow" style="left: 260px; top: 140px;">↙</div>
                 
+                <!-- Rest area label -->
+                <div class="rest-area">
+                    😴 Rest Area - Agents return here when idle
+                </div>
+                
                 <!-- Task tables (static positions) -->
                 <div class="task-table" id="task-plan_week" style="left: 10px; top: 60px; border-color: #3498db;">
                     <div class="task-name">1. Plan Week</div>
@@ -601,9 +619,10 @@ def get_html():
         
         // Get color based on agent status
         function getStatusColor(status) {
-            if (status === 'working') return '#2ecc71';
-            if (status === 'busy') return '#f39c12';
-            return '#95a5a6';
+            if (status === 'working') return '#2ecc71';    // Green
+            if (status === 'busy') return '#f39c12';       // Orange
+            if (status === 'resting') return '#3498db';    // Blue (rest color)
+            return '#95a5a6';                               // Gray (idle)
         }
         
         // Simulate agent working on a task

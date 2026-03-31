@@ -61,7 +61,13 @@ class PDCATools:
         """Update web dashboard data"""
         try:
             import urllib.request
-            url = f"http://localhost:8000/api/update?agent={agent}&status={status}&task={task}&task_id={task_id}"
+            
+            # If agent is resting/idle, don't specify task_id so they stay at rest area
+            if status in ['resting', 'idle']:
+                url = f"http://localhost:8000/api/update?agent={agent}&status={status}&task={task}"
+            else:
+                url = f"http://localhost:8000/api/update?agent={agent}&status={status}&task={task}&task_id={task_id}"
+            
             urllib.request.urlopen(url, timeout=1)
         except:
             pass  # Dashboard not running, that's ok
