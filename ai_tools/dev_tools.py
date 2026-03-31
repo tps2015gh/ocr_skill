@@ -1,15 +1,19 @@
 """
-PDCA Dev Tools - Python helpers for small team
+PDCA Dev Tools - Python helpers for AI agents
 ===============================================
 
-Simple Python tools to help the dev team work efficiently
+Simple Python tools to help AI agents work efficiently
 with minimal token usage.
 
 Usage:
-    python dev_tools.py plan          # Tech Lead planning
-    python dev_tools.py status        # Check current status
-    python dev_tools.py test          # QA testing
-    python dev_tools.py report        # Generate weekly report
+    from ai_tools.dev_tools import PDCATools
+    tools = PDCATools()
+    
+    # Apply Thai fixes
+    fixed = tools.apply_all_fixes(text)
+    
+    # Test quality
+    quality = tools.calculate_quality(text)
 """
 
 import os
@@ -22,7 +26,7 @@ from typing import Dict, List
 
 
 class PDCATools:
-    """Dev team tools for PDCA workflow"""
+    """AI agent tools for PDCA workflow"""
     
     def __init__(self):
         self.log_file = Path("pdca_log.json")
@@ -380,7 +384,7 @@ class PDCATools:
             
             try:
                 # Run OCR
-                from ocr_skill import process_file
+                from skill.ocr_skill import process_file
                 result = process_file(pdf, show_progress=False)
                 
                 # Save output
