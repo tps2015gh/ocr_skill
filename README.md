@@ -20,7 +20,7 @@ and markdown formats with page-by-page separation.
 - **Configurable**: Easy-to-edit configuration file
 - **🔌 Reusable Skill**: Easy integration into other projects
 - **🤖 AI Agent Ready**: Built-in support for AI agent tool integration
-- **🔄 PDCA Loop**: Continuous improvement with crash recovery (NEW!)
+- **🔄 PDCA Loop**: Agent-guided continuous improvement (see `PDCA_LOOP.md`)
 
 ---
 
@@ -32,12 +32,6 @@ ocr_skill/
 │   ├── __init__.py       # Main exports: process_file, OCRProcessor
 │   ├── skill.py          # OCRSkill class for AI agents
 │   └── models.py         # Data models
-├── pdca/                 # PDCA improvement loop (NEW!)
-│   ├── pdca_controller.py    # State management & workflow
-│   ├── programmer_agent.py   # Applies OCR fixes
-│   ├── team_lead_agent.py    # Coordinates PDCA cycle
-│   ├── __init__.py
-│   └── README.md             # PDCA documentation
 ├── config/               # Configuration files
 │   └── config.ini        # OCR settings
 ├── examples/             # Usage examples
@@ -57,7 +51,8 @@ ocr_skill/
 ├── .gitignore            # Git ignore rules
 ├── setup.py              # Package installation
 ├── requirements.txt      # Python dependencies
-└── README.md             # This file
+├── README.md             # This file
+└── PDCA_LOOP.md          # Agent guide for continuous improvement
 ```
 
 ---
