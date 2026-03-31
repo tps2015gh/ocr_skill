@@ -31,6 +31,48 @@ class PDCATools:
     def __init__(self):
         self.log_file = Path("pdca_log.json")
         self.state = self._load_log()
+        self._activities = []  # Store activities locally
+    
+    def _log_activity(self, agent: str, action: str, details: str = "", node: str = ""):
+        """Log agent activity internally and update web dashboard"""
+        activity = {
+            "timestamp": datetime.now().isoformat(),
+            "agent": agent,
+            "action": action,
+            "details": details
+        }
+        self._activities.append(activity)
+        
+        # Also save to pdca_log.json
+        if "agent_activities" not in self.state:
+            self.state["agent_activities"] = []
+        self.state["agent_activities"].append(activity)
+        
+        # Keep last 100
+        if len(self.state["agent_activities"]) > 100:
+            self.state["agent_activities"] = self.state["agent_activities"][-100:]
+        
+        self._save_log()
+        
+        # Update web dashboard
+        self._update_web_dashboard(agent, action, details, node)
+    
+    def _update_web_dashboard(self, agent: str, status: str, task: str, node: str):
+        """Update web dashboard data"""
+        try:
+            import urllib.request
+            node_map = {
+                "plan": "plan",
+                "do": "do",
+                "check": "check",
+                "act": "act",
+                "review": "act"
+            }
+            node_id = node_map.get(node, "")
+            url = f"http://localhost:8000/api/update?agent={agent}&status={status}&task={task}&node={node_id}"
+            urllib.request.urlopen(url, timeout=1)
+        except:
+            pass  # Dashboard not running, that's ok
     
     def _load_log(self) -> Dict:
         """Load pdca_log.json"""
@@ -54,7 +96,7 @@ class PDCATools:
     
     def plan_week(self, focus: str, tasks: List[str], goals: List[str]):
         """
-        Plan new week (Tech Lead)
+        Plan new week (Tech Lead agent)
         
         Usage:
             tools.plan_week(
@@ -77,6 +119,14 @@ class PDCATools:
         self.state["weeks"].append(week_data)
         self._save_log()
         
+        # Log agent activity
+        self._log_activity(
+            "Tech Lead",
+            "planning",
+            f"Week {week_num}: {focus}",
+            node="plan"
+        )
+        
         print(f"✓ Week {week_num} planned")
         print(f"  Focus: {focus}")
         print(f"  Tasks: {len(tasks)}")
@@ -85,7 +135,7 @@ class PDCATools:
     def review_week(self, quality_before: str, quality_after: str, 
                     improvement: str, notes: str = ""):
         """
-        Review completed week (Tech Lead)
+        Review completed week (Tech Lead agent)
         
         Usage:
             tools.review_week(
@@ -110,6 +160,13 @@ class PDCATools:
         current_week["status"] = "complete"
         
         self._save_log()
+        
+        # Log agent activity
+        self._log_activity(
+            "Tech Lead",
+            "review_week",
+            f"Quality: {quality_before} → {quality_after} ({improvement})"
+        )
         
         print(f"✓ Week {current_week['week']} reviewed")
         print(f"  Quality: {quality_before} → {quality_after}")
@@ -187,7 +244,7 @@ class PDCATools:
     
     def apply_all_fixes(self, text: str, show_progress: bool = False) -> str:
         """
-        Apply all Thai text fixes (Developer tool)
+        Apply all Thai text fixes (Developer agent)
         
         Usage:
             fixed = tools.apply_all_fixes(ocr_text)
@@ -236,6 +293,15 @@ class PDCATools:
         if show_progress:
             print(f"Total fixes applied: {len(fixes_applied)} ({', '.join(fixes_applied)})")
         
+        # Log agent activity
+        if fixes_applied:
+            self._log_activity(
+                "Developer",
+                "working",
+                f"Applied: {', '.join(fixes_applied)}",
+                node="do"
+            )
+        
         return text
     
     # ========== QA TOOLS ==========
@@ -271,13 +337,12 @@ class PDCATools:
         
         return results
     
-    def calculate_quality(self, text: str) -> float:
+    def calculate_quality(self, text: str, log: bool = True) -> float:
         """
-        Calculate OCR quality score (QA tool)
+        Calculate OCR quality score (QA agent)
         
         Usage:
             score = tools.calculate_quality(ocr_text)
-            # Returns: 0.0 to 1.0
         """
         score = 1.0
         
@@ -291,6 +356,15 @@ class PDCATools:
         thai_chars = len(re.findall(r'[\u0E00-\u0E7F]', text))
         if thai_chars / max(len(text), 1) > 0.3:
             score += 0.05
+        
+        # Log agent activity
+        if log:
+            self._log_activity(
+                "QA",
+                "testing",
+                f"Quality: {score:.0%}",
+                node="check"
+            )
         
         return max(0.0, min(1.0, score))
     
