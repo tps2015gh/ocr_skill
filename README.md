@@ -414,12 +414,19 @@ This project was developed using a multi-agent approach:
 - AI agent workflows requiring document reading
 - Quick deployment as reusable Python package
 - Government/legal document processing (Thai language support)
+- Printed documents with clear text
 
 ❌ **Not ideal for:**
 - Handwritten text recognition (Tesseract limitation)
 - Real-time OCR needs (processing takes time)
 - Complex layout preservation (tables, forms may lose structure)
 - Non-Latin/Non-Thai scripts without language packs
+
+**💡 Pro Tip:** For complex layouts or handwriting, see [`ADVANCED_OCR.md`](ADVANCED_OCR.md) which covers:
+- PaddleOCR integration (free, supports handwriting + layout)
+- Azure Form Recognizer (best for forms/tables)
+- Google Cloud Vision (best for handwriting)
+- Hybrid approach combining multiple engines
 
 **Bottom Line:** OCR Skill is a practical, well-engineered solution for Thai-English document processing. It excels at batch operations and integrates smoothly with AI agent workflows. For best results, use with printed documents at 150+ DPI and consider AI post-processing for critical accuracy needs.
 
