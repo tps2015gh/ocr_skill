@@ -58,7 +58,7 @@ class DashboardData:
         random.shuffle(positions)
         
         return {
-            # Three AI agents with random starting positions (rest area at bottom)
+            # Five AI agents with random starting positions (rest area at bottom)
             "agents": {
                 "Tech Lead": {
                     "status": "resting", 
@@ -78,6 +78,20 @@ class DashboardData:
                     "status": "resting", 
                     "x": positions[2]["x"], 
                     "y": positions[2]["y"], 
+                    "task": "Resting", 
+                    "last_update": ""
+                },
+                "Designer": {
+                    "status": "resting", 
+                    "x": positions[0]["x"] + 30, 
+                    "y": positions[0]["y"] - 20, 
+                    "task": "Resting", 
+                    "last_update": ""
+                },
+                "DevOps": {
+                    "status": "resting", 
+                    "x": positions[2]["x"] - 30, 
+                    "y": positions[2]["y"] - 20, 
                     "task": "Resting", 
                     "last_update": ""
                 }
@@ -515,8 +529,8 @@ def get_html():
                     <button onclick="simulateAgent('Tech Lead', 'Planning week', 'plan_week')">🎯 Tech Lead: Plan Week</button>
                     <button onclick="simulateAgent('Developer', 'Writing code', 'write_code')">💻 Developer: Write Code</button>
                     <button onclick="simulateAgent('QA', 'Testing quality', 'test_quality')">✅ QA: Test Quality</button>
-                    <button onclick="simulateAgent('Tech Lead', 'Reviewing results', 'review_week')">📊 Tech Lead: Review</button>
-                    <button onclick="simulateAgent('Developer', 'Fixing bug', 'fix_bug')">🐛 Developer: Fix Bug</button>
+                    <button onclick="simulateAgent('Designer', 'Designing UI', 'write_code')">🎨 Designer: Design UI</button>
+                    <button onclick="simulateAgent('DevOps', 'Deploying app', 'write_code')">⚙️ DevOps: Deploy</button>
                 </div>
             </div>
         </div>
@@ -525,9 +539,11 @@ def get_html():
     <script>
         // Agent emoji icons
         const agentIcons = {
-            "Tech Lead": "\\u{1F3AF}",
-            "Developer": "\\u{1F4BB}",
-            "QA": "\\u{2705}"
+            "Tech Lead": "\\u{1F3AF}",    // 🎯
+            "Developer": "\\u{1F4BB}",    // 💻
+            "QA": "\\u{2705}",            // ✅
+            "Designer": "\\u{1F3A8}",     // 🎨
+            "DevOps": "\\u{2699}"         // ⚙️
         };
         
         // Update dashboard with latest data from server

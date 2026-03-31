@@ -14,6 +14,7 @@ Then watch: http://localhost:8000
 import sys
 import time
 import random
+import urllib.request
 from pathlib import Path
 
 # Add parent to path
@@ -45,6 +46,35 @@ QA_TASKS = [
     ("Quality check", "test_quality"),
 ]
 
+DESIGNER_TASKS = [
+    ("Designing UI", "write_code"),
+    ("Creating mockup", "write_code"),
+    ("Reviewing design", "review_week"),
+    ("Fixing UX issue", "fix_bug"),
+]
+
+DEVOPS_TASKS = [
+    ("Deploying app", "write_code"),
+    ("Fixing pipeline", "fix_bug"),
+    ("Monitoring logs", "test_quality"),
+    ("Scaling servers", "write_code"),
+]
+
+
+def update_agent_position(agent: str, status: str, task: str, task_id: str = ""):
+    """Directly update agent position on dashboard via API"""
+    try:
+        if status in ['resting', 'idle']:
+            url = f"http://localhost:8000/api/update?agent={agent}&status={status}&task={task}"
+        else:
+            url = f"http://localhost:8000/api/update?agent={agent}&status={status}&task={task}&task_id={task_id}"
+        
+        urllib.request.urlopen(url, timeout=2)
+        return True
+    except Exception as e:
+        print(f"  ⚠️ Dashboard update failed: {e}")
+        return False
+
 
 def generate_temp_work(duration_seconds: int = 60):
     """
@@ -60,7 +90,13 @@ def generate_temp_work(duration_seconds: int = 60):
     print(f"Watch dashboard at: http://localhost:8000")
     print("="*60 + "\n")
     
-    tools = PDCATools()
+    # Test dashboard connection
+    print("📡 Connecting to dashboard...")
+    if not update_agent_position("Tech Lead", "resting", "Resting"):
+        print("❌ Dashboard not responding!")
+        print("   Start dashboard first: python ai_tools/web_dashboard.py")
+        return
+    print("✓ Dashboard connected!\n")
     
     start_time = time.time()
     iteration = 0
@@ -72,34 +108,51 @@ def generate_temp_work(duration_seconds: int = 60):
             # Tech Lead work
             task_name, task_id = random.choice(TECH_LEAD_TASKS)
             print(f"[{iteration}] 🎯 Tech Lead: {task_name}")
-            tools._log_activity("Tech Lead", "working", task_name, task_id)
+            update_agent_position("Tech Lead", "working", task_name, task_id)
             
             # Developer work
             task_name, task_id = random.choice(DEVELOPER_TASKS)
             print(f"[{iteration}] 💻 Developer: {task_name}")
-            tools._log_activity("Developer", "working", task_name, task_id)
+            update_agent_position("Developer", "working", task_name, task_id)
             
             # QA work
             task_name, task_id = random.choice(QA_TASKS)
             print(f"[{iteration}] ✅ QA: {task_name}")
-            tools._log_activity("QA", "working", task_name, task_id)
+            update_agent_position("QA", "working", task_name, task_id)
             
-            # Wait a bit before next task
-            time.sleep(2)
+            # Designer work
+            task_name, task_id = random.choice(DESIGNER_TASKS)
+            print(f"[{iteration}] 🎨 Designer: {task_name}")
+            update_agent_position("Designer", "working", task_name, task_id)
+            
+            # DevOps work
+            task_name, task_id = random.choice(DEVOPS_TASKS)
+            print(f"[{iteration}] ⚙️ DevOps: {task_name}")
+            update_agent_position("DevOps", "working", task_name, task_id)
+            
+            # Wait while working
+            time.sleep(3)
             
             # Mark tasks as complete and return to rest
             print(f"[{iteration}] 😴 Agents returning to rest...")
-            tools._log_activity("Tech Lead", "resting", "Resting", "")
-            tools._log_activity("Developer", "resting", "Resting", "")
-            tools._log_activity("QA", "resting", "Resting", "")
+            update_agent_position("Tech Lead", "resting", "Resting")
+            update_agent_position("Developer", "resting", "Resting")
+            update_agent_position("QA", "resting", "Resting")
+            update_agent_position("Designer", "resting", "Resting")
+            update_agent_position("DevOps", "resting", "Resting")
             
-            time.sleep(1)
+            time.sleep(2)
     
     except KeyboardInterrupt:
         print("\n\n⏹️  Stopped by user")
     
+    # Return all to rest
+    update_agent_position("Tech Lead", "resting", "Resting")
+    update_agent_position("Developer", "resting", "Resting")
+    update_agent_position("QA", "resting", "Resting")
+    
     print(f"\n✓ Generated {iteration} iterations of work")
-    print("Check dashboard for agent activities!")
+    print("Agents returned to rest area!")
 
 
 def main():

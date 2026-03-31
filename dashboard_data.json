@@ -1,0 +1,98 @@
+{
+  "agents": {
+    "Tech Lead": {
+      "status": "working",
+      "x": 100,
+      "y": 80,
+      "task": "Planning week",
+      "last_update": "16:23:32"
+    },
+    "Developer": {
+      "status": "working",
+      "x": 280,
+      "y": 80,
+      "task": "Writing code",
+      "last_update": "16:23:34"
+    },
+    "QA": {
+      "status": "resting",
+      "x": 550,
+      "y": 350,
+      "task": "Resting",
+      "last_update": "16:21:49"
+    }
+  },
+  "tasks": [
+    {
+      "id": "plan_week",
+      "name": "1. Plan Week",
+      "x": 100,
+      "y": 80,
+      "color": "#3498db",
+      "queue": 1
+    },
+    {
+      "id": "write_code",
+      "name": "2. Write Code",
+      "x": 280,
+      "y": 80,
+      "color": "#e74c3c",
+      "queue": 1
+    },
+    {
+      "id": "test_quality",
+      "name": "3. Test Quality",
+      "x": 460,
+      "y": 80,
+      "color": "#f1c40f",
+      "queue": 0
+    },
+    {
+      "id": "review_week",
+      "name": "4. Review Week",
+      "x": 190,
+      "y": 200,
+      "color": "#2ecc71",
+      "queue": 0
+    },
+    {
+      "id": "fix_bug",
+      "name": "5. Fix Bug",
+      "x": 370,
+      "y": 200,
+      "color": "#9b59b6",
+      "queue": 0
+    }
+  ],
+  "log": [
+    {
+      "time": "16:23:34",
+      "agent": "Developer",
+      "status": "working",
+      "task": "Writing code"
+    },
+    {
+      "time": "16:23:32",
+      "agent": "Tech Lead",
+      "status": "working",
+      "task": "Planning week"
+    },
+    {
+      "time": "16:21:49",
+      "agent": "QA",
+      "status": "resting",
+      "task": "Resting"
+    },
+    {
+      "time": "16:21:47",
+      "agent": "Developer",
+      "status": "resting",
+      "task": "Resting"
+    }
+  ],
+  "stats": {
+    "total_actions": 4,
+    "current_week": 0,
+    "quality": "0%"
+  }
+}

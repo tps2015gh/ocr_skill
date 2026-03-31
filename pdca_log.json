@@ -91,604 +91,604 @@
   ],
   "agent_activities": [
     {
-      "timestamp": "2026-03-31T16:18:44.533375",
+      "timestamp": "2026-03-31T16:20:07.229623",
       "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:18:45.548409",
+      "timestamp": "2026-03-31T16:20:09.773929",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Meeting with team"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:09.777929",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Adding tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:09.782930",
+      "agent": "QA",
+      "action": "working",
+      "details": "Quality check"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:11.792660",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:11.796657",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:13.196016",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:16.248679",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Reviewing code"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:16.252649",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Debugging issue"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:16.257648",
+      "agent": "QA",
+      "action": "working",
+      "details": "Running tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:18.268277",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:18.272241",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:19.386908",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:22.430301",
       "agent": "Tech Lead",
       "action": "working",
       "details": "Updating roadmap"
     },
     {
-      "timestamp": "2026-03-31T16:18:45.551307",
+      "timestamp": "2026-03-31T16:20:22.434301",
       "agent": "Developer",
       "action": "working",
       "details": "Writing feature"
     },
     {
-      "timestamp": "2026-03-31T16:18:45.554339",
+      "timestamp": "2026-03-31T16:20:22.438271",
       "agent": "QA",
       "action": "working",
       "details": "Running tests"
     },
     {
-      "timestamp": "2026-03-31T16:18:47.569257",
+      "timestamp": "2026-03-31T16:20:24.454555",
       "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:18:47.572257",
+      "timestamp": "2026-03-31T16:20:24.458519",
       "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:18:47.575290",
+      "timestamp": "2026-03-31T16:20:25.608874",
       "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:18:48.583698",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Reviewing code"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:48.588698",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Fixing bug #123"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:48.592876",
-      "agent": "QA",
-      "action": "working",
-      "details": "Testing feature"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:50.605591",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:50.615605",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:50.621697",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:51.634328",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Reviewing code"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:51.637498",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Fixing bug #123"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:51.641495",
-      "agent": "QA",
-      "action": "working",
-      "details": "Running tests"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:53.649235",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:53.653173",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:53.657175",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:54.671959",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Meeting with team"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:54.674995",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Refactoring code"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:54.679014",
-      "agent": "QA",
-      "action": "working",
-      "details": "Testing feature"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:56.697342",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:56.704376",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:56.711927",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:57.725996",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Updating roadmap"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:57.741771",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Fixing bug #123"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:57.749697",
-      "agent": "QA",
-      "action": "working",
-      "details": "Quality check"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:59.757498",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:59.761548",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:18:59.765763",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:00.784447",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Reviewing code"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:00.788420",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Fixing bug #123"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:00.791410",
-      "agent": "QA",
-      "action": "working",
-      "details": "Testing feature"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:02.794475",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:02.798445",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:02.801476",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:03.819010",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Updating roadmap"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:03.822980",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Fixing bug #123"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:03.826980",
-      "agent": "QA",
-      "action": "working",
-      "details": "Testing feature"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:05.843105",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:05.846107",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:05.849670",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:06.854815",
+      "timestamp": "2026-03-31T16:20:28.657355",
       "agent": "Tech Lead",
       "action": "working",
       "details": "Planning sprint"
     },
     {
-      "timestamp": "2026-03-31T16:19:06.858813",
+      "timestamp": "2026-03-31T16:20:28.663338",
       "agent": "Developer",
       "action": "working",
       "details": "Fixing bug #123"
     },
     {
-      "timestamp": "2026-03-31T16:19:06.862847",
+      "timestamp": "2026-03-31T16:20:28.668338",
       "agent": "QA",
       "action": "working",
       "details": "Testing feature"
     },
     {
-      "timestamp": "2026-03-31T16:19:08.881284",
+      "timestamp": "2026-03-31T16:20:30.677059",
       "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:08.887282",
+      "timestamp": "2026-03-31T16:20:30.682058",
       "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:08.890314",
+      "timestamp": "2026-03-31T16:20:31.770589",
       "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:09.901472",
+      "timestamp": "2026-03-31T16:20:34.826221",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Meeting with team"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:34.830233",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Writing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:34.834531",
+      "agent": "QA",
+      "action": "working",
+      "details": "Running tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:36.851761",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:36.858621",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:38.284964",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:41.337223",
       "agent": "Tech Lead",
       "action": "working",
       "details": "Updating roadmap"
     },
     {
-      "timestamp": "2026-03-31T16:19:09.905504",
+      "timestamp": "2026-03-31T16:20:41.344163",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Adding tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:41.348163",
+      "agent": "QA",
+      "action": "working",
+      "details": "Testing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:43.362958",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:43.366961",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:44.491122",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:47.537528",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Planning sprint"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:47.541688",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Writing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:47.544303",
+      "agent": "QA",
+      "action": "working",
+      "details": "Testing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:49.554720",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:49.558003",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:50.677033",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:53.733235",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Planning sprint"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:53.738267",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Writing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:53.742264",
+      "agent": "QA",
+      "action": "working",
+      "details": "Running tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:55.756671",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:55.760601",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:56.852199",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:59.901246",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:20:59.907271",
       "agent": "Developer",
       "action": "working",
       "details": "Debugging issue"
     },
     {
-      "timestamp": "2026-03-31T16:19:09.908470",
+      "timestamp": "2026-03-31T16:20:59.910587",
+      "agent": "QA",
+      "action": "working",
+      "details": "Running tests"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:01.924669",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:01.927603",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:03.010346",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:06.068070",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:06.078109",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Refactoring code"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:06.088105",
       "agent": "QA",
       "action": "working",
       "details": "Verifying fix"
     },
     {
-      "timestamp": "2026-03-31T16:19:11.916536",
+      "timestamp": "2026-03-31T16:21:08.100940",
       "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:11.919536",
+      "timestamp": "2026-03-31T16:21:08.104564",
       "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:11.922537",
+      "timestamp": "2026-03-31T16:21:09.178544",
       "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:12.939788",
+      "timestamp": "2026-03-31T16:21:12.243340",
       "agent": "Tech Lead",
       "action": "working",
       "details": "Meeting with team"
     },
     {
-      "timestamp": "2026-03-31T16:19:12.943793",
+      "timestamp": "2026-03-31T16:21:12.246336",
       "agent": "Developer",
       "action": "working",
-      "details": "Refactoring code"
+      "details": "Writing feature"
     },
     {
-      "timestamp": "2026-03-31T16:19:12.947796",
+      "timestamp": "2026-03-31T16:21:12.250338",
       "agent": "QA",
       "action": "working",
       "details": "Quality check"
     },
     {
-      "timestamp": "2026-03-31T16:19:14.957443",
+      "timestamp": "2026-03-31T16:21:14.257408",
       "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:14.960420",
+      "timestamp": "2026-03-31T16:21:14.261409",
       "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:14.965424",
+      "timestamp": "2026-03-31T16:21:15.390739",
       "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:15.974730",
+      "timestamp": "2026-03-31T16:21:18.444012",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Updating roadmap"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:18.448339",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Writing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:18.451748",
+      "agent": "QA",
+      "action": "working",
+      "details": "Testing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:20.458061",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:20.462066",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:21.551758",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:24.594946",
       "agent": "Tech Lead",
       "action": "working",
       "details": "Reviewing code"
     },
     {
-      "timestamp": "2026-03-31T16:19:15.978663",
+      "timestamp": "2026-03-31T16:21:24.599004",
       "agent": "Developer",
       "action": "working",
       "details": "Fixing bug #123"
     },
     {
-      "timestamp": "2026-03-31T16:19:15.982630",
+      "timestamp": "2026-03-31T16:21:24.603009",
       "agent": "QA",
       "action": "working",
       "details": "Quality check"
     },
     {
-      "timestamp": "2026-03-31T16:19:17.998877",
+      "timestamp": "2026-03-31T16:21:26.620469",
       "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:18.007831",
+      "timestamp": "2026-03-31T16:21:26.624402",
       "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:18.010832",
+      "timestamp": "2026-03-31T16:21:27.741235",
       "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:19.013850",
+      "timestamp": "2026-03-31T16:21:30.780456",
+      "agent": "Tech Lead",
+      "action": "working",
+      "details": "Planning sprint"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:30.784988",
+      "agent": "Developer",
+      "action": "working",
+      "details": "Fixing bug #123"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:30.788984",
+      "agent": "QA",
+      "action": "working",
+      "details": "Testing feature"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:32.797463",
+      "agent": "Tech Lead",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:32.801498",
+      "agent": "Developer",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:34.273817",
+      "agent": "QA",
+      "action": "resting",
+      "details": "Resting"
+    },
+    {
+      "timestamp": "2026-03-31T16:21:37.318267",
       "agent": "Tech Lead",
       "action": "working",
       "details": "Updating roadmap"
     },
     {
-      "timestamp": "2026-03-31T16:19:19.017849",
+      "timestamp": "2026-03-31T16:21:37.323282",
       "agent": "Developer",
       "action": "working",
-      "details": "Fixing bug #123"
+      "details": "Writing feature"
     },
     {
-      "timestamp": "2026-03-31T16:19:19.021848",
+      "timestamp": "2026-03-31T16:21:37.329285",
       "agent": "QA",
       "action": "working",
-      "details": "Running tests"
+      "details": "Verifying fix"
     },
     {
-      "timestamp": "2026-03-31T16:19:21.036811",
+      "timestamp": "2026-03-31T16:21:39.344005",
       "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:21.041808",
+      "timestamp": "2026-03-31T16:21:39.347973",
       "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:21.044807",
+      "timestamp": "2026-03-31T16:21:40.479906",
       "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:22.052889",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Meeting with team"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:22.057258",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Debugging issue"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:22.059880",
-      "agent": "QA",
-      "action": "working",
-      "details": "Running tests"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:24.072285",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:24.075215",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:24.078215",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:25.096489",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Updating roadmap"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:25.101313",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Fixing bug #123"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:25.105217",
-      "agent": "QA",
-      "action": "working",
-      "details": "Quality check"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:27.121285",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:27.132200",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:27.139238",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:28.150329",
-      "agent": "Tech Lead",
-      "action": "working",
-      "details": "Updating roadmap"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:28.154249",
-      "agent": "Developer",
-      "action": "working",
-      "details": "Refactoring code"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:28.157264",
-      "agent": "QA",
-      "action": "working",
-      "details": "Running tests"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:30.162812",
-      "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:30.170443",
-      "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:30.173446",
-      "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
-    },
-    {
-      "timestamp": "2026-03-31T16:19:31.191554",
+      "timestamp": "2026-03-31T16:21:43.540578",
       "agent": "Tech Lead",
       "action": "working",
       "details": "Meeting with team"
     },
     {
-      "timestamp": "2026-03-31T16:19:31.195586",
+      "timestamp": "2026-03-31T16:21:43.546987",
       "agent": "Developer",
       "action": "working",
-      "details": "Refactoring code"
+      "details": "Adding tests"
     },
     {
-      "timestamp": "2026-03-31T16:19:31.200553",
+      "timestamp": "2026-03-31T16:21:43.551980",
       "agent": "QA",
       "action": "working",
       "details": "Quality check"
     },
     {
-      "timestamp": "2026-03-31T16:19:33.209948",
+      "timestamp": "2026-03-31T16:21:45.557479",
       "agent": "Tech Lead",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:33.213950",
+      "timestamp": "2026-03-31T16:21:45.561481",
       "agent": "Developer",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:33.217952",
+      "timestamp": "2026-03-31T16:21:47.107875",
       "agent": "QA",
-      "action": "idle",
-      "details": "Task complete"
+      "action": "resting",
+      "details": "Resting"
     },
     {
-      "timestamp": "2026-03-31T16:19:34.233735",
+      "timestamp": "2026-03-31T16:21:50.148455",
       "agent": "Tech Lead",
       "action": "working",
       "details": "Meeting with team"
     },
     {
-      "timestamp": "2026-03-31T16:19:34.236736",
+      "timestamp": "2026-03-31T16:21:50.156496",
       "agent": "Developer",
       "action": "working",
-      "details": "Fixing bug #123"
+      "details": "Adding tests"
     },
     {
-      "timestamp": "2026-03-31T16:19:34.241066",
+      "timestamp": "2026-03-31T16:21:50.160495",
       "agent": "QA",
       "action": "working",
-      "details": "Quality check"
+      "details": "Verifying fix"
     }
   ]
 }
